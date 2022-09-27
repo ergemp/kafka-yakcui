@@ -430,7 +430,6 @@
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
     <script src="js/connectors.js"></script>
-    <script src="js/model/connectorModel.js"></script>
 
     <script src="vendor/devexpress/dx.all.js"></script>
     <script src="vendor/devexpress/dx-quill.js"></script>
@@ -448,9 +447,10 @@
         });
         */
 
-        var connectors=fillConnectors("connectorList");
-        var connectors=getClusterInfo();
-
+        let connectors = getConnectors();
+        console.log(connectors);
+        fillConnectors("connectorList", connectors);
+        fillClusterInfo();
     </script>
 
 </body>
