@@ -6,6 +6,67 @@ const connectorModel =  {
     "status" : "",
 }
 */
+let connectorsData = [];
+
+const popupContentTemplate = function () {
+    return $('<div>').append(
+      $(`<p>Full Name: <span>${employee.FirstName}</span>
+                         <span>${employee.LastName}</span></p>`),
+      $(`<p>Birth Date: <span>${employee.BirthDate}</span></p>`),
+      $(`<p>Address: <span>${employee.Address}</span></p>`),
+      $(`<p>Hire Date: <span>${employee.HireDate}</span></p>`),
+      $(`<p>Position: <span>${employee.Position}</span></p>`),
+    );
+  };
+
+
+const popup = $('#popup').dxPopup({
+    contentTemplate: popupContentTemplate,
+    width: 300,
+    height: 280,
+    container: '.dx-viewport',
+    showTitle: true,
+    title: 'Information',
+    visible: false,
+    dragEnabled: false,
+    hideOnOutsideClick: true,
+    showCloseButton: false,
+    position: {
+      at: 'center',
+      my: 'center',
+    },
+    toolbarItems: [{
+      widget: 'dxButton',
+      toolbar: 'bottom',
+      location: 'before',
+      options: {
+        text: 'Details',
+        onClick() {
+            alert("go to connector_details.html");
+          /*
+          const message = `Email is sent to ${employee.FirstName} ${employee.LastName}`;
+          DevExpress.ui.notify({
+            message,
+            position: {
+              my: 'center top',
+              at: 'center top',
+            },
+          }, 'success', 3000);
+          */
+        },
+      },
+    }, {
+      widget: 'dxButton',
+      toolbar: 'bottom',
+      location: 'after',
+      options: {
+        text: 'Delete',
+        onClick() {
+          alert("will delete");
+        },
+      },
+    }],
+  }).dxPopup('instance');
 
 function ConnectorModel(name, workerid, type, status) {
     this.name = name;
@@ -13,8 +74,6 @@ function ConnectorModel(name, workerid, type, status) {
     this.type = type;
     this.status = status;
 }
-
-let connectorsData = [];
 
 function fillClusterInfo(){
         $('#clusterId').dxDataGrid({
@@ -34,7 +93,8 @@ function fillConnectors(divId, gConnectorsData){
             onSelectionChanged(selectedItems) {
               const data = selectedItems.selectedRowsData[0];
               if (data) {
-                alert(JSON.stringify(data));
+                //alert(JSON.stringify(data));
+                popup.show();
               }
             },
             columns: [
@@ -94,3 +154,4 @@ function getConnectors(){
     return connectorsData;
     //console.log(connectorsData);
 }
+
