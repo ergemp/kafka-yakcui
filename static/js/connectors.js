@@ -7,23 +7,23 @@ const connectorModel =  {
 }
 */
 let connectorsData = [];
+let selectedConnector;
 
 const popupContentTemplate = function () {
+    return("<pre>" + getConnectorStatusResponse(selectedConnector) + "</pre>");
+
+    /*
     return $('<div>').append(
-      $(`<p>Full Name: <span>${employee.FirstName}</span>
-                         <span>${employee.LastName}</span></p>`),
-      $(`<p>Birth Date: <span>${employee.BirthDate}</span></p>`),
-      $(`<p>Address: <span>${employee.Address}</span></p>`),
-      $(`<p>Hire Date: <span>${employee.HireDate}</span></p>`),
-      $(`<p>Position: <span>${employee.Position}</span></p>`),
+      $(`<p>Connector Name: <span>${selectedConnector.name}</span></p>`)
     );
+    */
   };
 
 
 const popup = $('#popup').dxPopup({
     contentTemplate: popupContentTemplate,
-    width: 300,
-    height: 280,
+    width: 400,
+    height: 500,
     container: '.dx-viewport',
     showTitle: true,
     title: 'Information',
@@ -42,7 +42,8 @@ const popup = $('#popup').dxPopup({
       options: {
         text: 'Details',
         onClick() {
-            alert("go to connector_details.html");
+            //alert("go to connector_details.html");
+            window.location.href = 'http://localhost:8080/connector_details.html?name=' + selectedConnector;
           /*
           const message = `Email is sent to ${employee.FirstName} ${employee.LastName}`;
           DevExpress.ui.notify({
@@ -93,7 +94,7 @@ function fillConnectors(divId, gConnectorsData){
             onSelectionChanged(selectedItems) {
               const data = selectedItems.selectedRowsData[0];
               if (data) {
-                //alert(JSON.stringify(data));
+                selectedConnector = data.name;
                 popup.show();
               }
             },
@@ -153,5 +154,19 @@ function getConnectors(){
     });
     return connectorsData;
     //console.log(connectorsData);
+}
+
+function getConnectorStatusResponse(gConnectorName) {
+    let retVal;
+    $.ajax({
+        url: "http://localhost:8083/connectors/" + gConnectorName + "/status",
+        type: 'GET',
+        dataType: 'json',
+        async: false,
+        success: function(result) {
+            retVal = result;
+        }
+    });
+    return JSON.stringify(retVal, null, 2);
 }
 
