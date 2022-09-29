@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Connect UI - Connector Details</title>
+    <title>Connect UI - New Connector</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -24,7 +24,7 @@
 
 </head>
 
-<body id="page-top">
+<body id="page-top" class="dx-viewport">
 
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -42,44 +42,30 @@
             <div id="content">
 
                 <!-- Topbar -->
-                <div id="topbar"></div>
-                <!-- End of Topbar -->
+                <div id="topbar"> </div>
+                <!-- Topbar-->
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800"><div id="pageHeader"></div></h1>
+                    <h1 class="h3 mb-4 text-gray-800">New Connector</h1>
 
-                    <div id="connectorName"></div>
-
-                    <div class="row">
-                        <input type="button" value="delete" class="btn btn-danger btn-lg"/>
-                        &nbsp;&nbsp;
-                        <input type="button" value="pause" class="btn btn-warning btn-lg" onclick="pauseConnector(get('name'));" />
-                        &nbsp;&nbsp;
-                        <input type="button" value="resume" class="btn btn-secondary btn-lg" onclick="resumeConnector(get('name'));" />
-                        &nbsp;&nbsp;
-                        <input type="button" value="restart" class="btn btn-secondary btn-lg" onclick="restartConnector(get('name'));"/>
+                    <div>
+                        <div id="pluginList"></div>
+                    </div>
+                    <br/>
+                    <br/>
+                    <div>
+                        <div id="clusterId"></div>
+                    </div>
+                    <br/>
+                    <br/>
+                    <div>
+                        <div id="connectorList"></div>
                     </div>
 
-                    <br/>
-                    <hr/>
-                    <br/>
-
-                    <div class="row">
-                        <div class="col md-6">
-                            <p><h3>Connector Status</h3></p><br/>
-                            <div id="statusDetails"></div><br/>
-                            <textarea id="connectorStatus" name="Connector Status" rows="25" cols="50" readonly></textarea>
-                        </div>
-                        <div class="col md-6">
-                            <p><h3>Connector Config</h3></p><br/>
-                            <div id="connectorDetails"></div><br/>
-                            <textarea id="connectorConfig" name="Connector Config" rows="25" cols="50" readonly></textarea>
-                        </div>
-                    </div>
-
+                    <div id="popup"></div>
                 </div>
                 <!-- /.container-fluid -->
 
@@ -108,27 +94,33 @@
     <script src="vendor/devexpress/dx.all.js"></script>
     <script src="vendor/devexpress/dx-quill.js"></script>
 
-    <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
-    <script src="js/connector_details.js"></script>
+    <script src="js/connectors.js"></script>
+    <script src="js/new_connector.js"></script>
 
     <script>
-
-        connectorConfigJson = getConnectorConfig(get("name")) ;
-        connectorStatusJson = getConnectorStatus(get("name")) ;
-
         $("#sidebar").load("include/sidebar.html");
         $("#topbar").load("include/topbar.html");
 
-        $("#pageHeader").text("Connector Details: " + JSON.parse(connectorStatusJson).name);
+        /*
+        $.ajax({
+        url: "http://localhost:8083",
+        type: 'GET',
+        success: function(res) {
+            console.log(res);
+            alert(res);
+        }
+        });
+        */
 
-        $("#connectorConfig").text(connectorConfigJson);
-        $("#connectorStatus").text(connectorStatusJson);
+        let connectors = getConnectors();
+        console.log(connectors);
+        fillConnectors("connectorList", connectors);
+        fillClusterInfo();
 
-        $("#connectorDetails").html(fillConnectorDetails(connectorConfigJson));
-        $("#statusDetails").html(fillStatusDetails(connectorStatusJson));
-
+        fillPluginList("pluginList");
     </script>
+
 </body>
 
 </html>

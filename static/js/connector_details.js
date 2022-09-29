@@ -56,7 +56,7 @@ var getUrlParameter = function getUrlParameter(sParam) {
 function fillConnectorDetails(gConnectorConfig){
 
     let obj = JSON.parse(gConnectorConfig);
-    let retVal = "";
+    let retVal = "<div>";
 
     if (obj["config"]["connector.class"] === "FileStreamSource") {
 
@@ -73,6 +73,7 @@ function fillConnectorDetails(gConnectorConfig){
             retVal +=  "<p> <h5>Source Topic:</h5>  " + obj["config"]["topic"]  + "</p>" ;
         }
     }
+    retVal += "</div>";
     return retVal;
 }
 

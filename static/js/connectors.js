@@ -94,8 +94,9 @@ function fillConnectors(divId, gConnectorsData){
             onSelectionChanged(selectedItems) {
               const data = selectedItems.selectedRowsData[0];
               if (data) {
-                selectedConnector = data.name;
-                popup.show();
+                window.location.href = 'http://localhost:8080/connector_details.html?name=' + data.name;
+                //selectedConnector = data.name;
+                //popup.show();
               }
             },
             columns: [
