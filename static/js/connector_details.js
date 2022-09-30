@@ -150,3 +150,16 @@ function restartConnector(gConnectorName) {
     location.reload();
 }
 
+function deleteConnector(gConnectorName) {
+    $.ajax({
+        url: "http://localhost:8083/connectors/" + gConnectorName + "",
+        type: 'DELETE',
+        dataType: 'json',
+        async: false,
+        success: function(result) {
+        }
+    });
+    alert("connector deleted");
+    window.location.href = "http://localhost:8080/connectors.html";
+}
+

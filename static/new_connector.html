@@ -57,12 +57,7 @@
                     <br/>
                     <br/>
                     <div>
-                        <div id="clusterId"></div>
-                    </div>
-                    <br/>
-                    <br/>
-                    <div>
-                        <div id="connectorList"></div>
+                        <div id="newConnectorForm"></div>
                     </div>
 
                     <div id="popup"></div>
@@ -101,22 +96,6 @@
     <script>
         $("#sidebar").load("include/sidebar.html");
         $("#topbar").load("include/topbar.html");
-
-        /*
-        $.ajax({
-        url: "http://localhost:8083",
-        type: 'GET',
-        success: function(res) {
-            console.log(res);
-            alert(res);
-        }
-        });
-        */
-
-        let connectors = getConnectors();
-        console.log(connectors);
-        fillConnectors("connectorList", connectors);
-        fillClusterInfo();
 
         fillPluginList("pluginList");
     </script>

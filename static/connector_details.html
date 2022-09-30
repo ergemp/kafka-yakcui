@@ -54,13 +54,13 @@
                     <div id="connectorName"></div>
 
                     <div class="row">
-                        <input type="button" value="delete" class="btn btn-danger btn-lg"/>
+                        <input type="button" value="delete" class="btn btn-danger btn-lg" onclick="deleteConnector(get('name'));" />
                         &nbsp;&nbsp;
                         <input type="button" value="pause" class="btn btn-warning btn-lg" onclick="pauseConnector(get('name'));" />
                         &nbsp;&nbsp;
                         <input type="button" value="resume" class="btn btn-secondary btn-lg" onclick="resumeConnector(get('name'));" />
                         &nbsp;&nbsp;
-                        <input type="button" value="restart" class="btn btn-secondary btn-lg" onclick="restartConnector(get('name'));"/>
+                        <input type="button" value="restart" class="btn btn-secondary btn-lg" onclick="restartConnector(get('name'));" />
                     </div>
 
                     <br/>

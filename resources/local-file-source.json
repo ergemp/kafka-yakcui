@@ -1,0 +1,13 @@
+
+//curl -X POST -H "content-type: application/json" -d @local-log-source.json localhost:8083/connectors | jq
+
+{
+  "name": "local-file-source",
+  "config":
+  {
+    "connector.class": "FileStreamSource",
+    "tasks.max": 1,
+    "file": "/usr/local/kafka-282/scripts/tt.log",
+    "topic": "tt.log"
+  }
+}
