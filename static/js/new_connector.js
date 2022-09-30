@@ -51,6 +51,17 @@ let fileSourceTemplateHtml = "<div style='float:left;margin-right:20px;'>" +
                              "</div>"
                              ;
 
+let fileSinkTemplateHtml = "<div style='float:left;margin-right:20px;'>" +
+                             "<label style='display:block' for='connectorName'>Connector Name</label>" +
+                             "<input type='text' id='connectorName' /><br/><br/>" +
+                             "<label style='display:block' for='fileName'>File Name</label>" +
+                             "<input type='text' id='fileName' /><br/><br/>" +
+                             "<label style='display:block' for='topicName'>Topic Name</label>" +
+                             "<input type='text' id='topicName' /><br/><br/>" +
+                             "<input type='button' value='Create' onClick='createFileStreamSourceConnector()'>" +
+                             "</div>"
+                             ;
+
 function createFileStreamSourceConnector(){
     obj = file_source_json ;
 
