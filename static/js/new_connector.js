@@ -58,7 +58,22 @@ let fileSinkTemplateHtml = "<div style='float:left;margin-right:20px;'>" +
                              "<input type='text' id='fileName' /><br/><br/>" +
                              "<label style='display:block' for='topicName'>Topic Name</label>" +
                              "<input type='text' id='topicName' /><br/><br/>" +
-                             "<input type='button' value='Create' onClick='createFileStreamSourceConnector()'>" +
+                             "<input type='button' value='Create' onClick='createFileStreamSinkConnector()'>" +
+                             "</div>"
+                             ;
+
+let postgresSourceTemplateHtml = "<div style='float:left;margin-right:20px;'>" +
+                             "<label style='display:block' for='connectorName'>Connector Name</label>" +
+                             "<input type='text' id='connectorName' /><br/><br/>" +
+                             "<label style='display:block' for='hostName'>Host Name</label>" +
+                             "<input type='text' id='hostName' /><br/><br/>" +
+                             "<label style='display:block' for='port'>Port</label>" +
+                             "<input type='text' id='port' /><br/><br/>" +
+                             "<label style='display:block' for='userName'>User Name</label>" +
+                             "<input type='text' id='userName' /><br/><br/>" +
+                             "<label style='display:block' for='password'>Password</label>" +
+                             "<input type='text' id='password' /><br/><br/>" +
+                             "<input type='button' value='Create' onClick='createPostgresSourceConnector()'>" +
                              "</div>"
                              ;
 
@@ -75,12 +90,43 @@ function createFileStreamSourceConnector(){
     requestNewConnector(obj);
 }
 
+function createFileStreamSinkConnector(){
+    obj = file_source_json ;
+
+    obj.name = $("#connectorName").val();
+    obj.config["connector.class"] = "org.apache.kafka.connect.file.FileStreamSinkConnector";
+    obj.config.file = $("#fileName").val();
+    obj.config.topics = $("#topicName").val();
+
+    alert (JSON.stringify(obj));
+
+    requestNewConnector(obj);
+}
+
+function createPostgresSourceConnector(){
+    obj = postgres_source_json ;
+
+    obj.name = $("#connectorName").val();
+    obj.config["connector.class"] = "io.debezium.connector.postgresql.PostgresConnector";
+
+
+    alert (JSON.stringify(obj));
+
+    //requestNewConnector(obj);
+}
+
 function buildBuilder(){
     let selectedItem = $('#pluginList').find(":selected").val();
 
     if (selectedItem !== "") {
         if (selectedItem === "org.apache.kafka.connect.file.FileStreamSourceConnector") {
             $("#newConnectorForm").html(fileSourceTemplateHtml);
+        }
+        else if(selectedItem === "org.apache.kafka.connect.file.FileStreamSinkConnector") {
+            $("#newConnectorForm").html(fileSinkTemplateHtml);
+        }
+        else if(selectedItem === "io.debezium.connector.postgresql.PostgresConnector") {
+            $("#newConnectorForm").html(postgresSourceTemplateHtml);
         }
     }
 }
@@ -116,14 +162,30 @@ let file_source_json = {
                          }
                        }
 
-let file_sink_json =    {
-                          "name": "",
-                          "config":
-                          {
-                            "connector.class": "",
-                            "tasks.max": 1,
-                            "file": "",
-                            "topic": ""
-                          }
-                        }
+let file_sink_json =   {
+                         "name": "",
+                         "config":
+                         {
+                           "connector.class": "",
+                           "tasks.max": 1,
+                           "file": "",
+                           "topics": ""
+                         }
+                       }
 
+let postgres_source_json = {
+                           	"name": "",
+                           	"config": {
+                           		"connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+                           		"database.hostname": "10.0.0.13",
+                           		"database.port": "5432",
+                           		"database.user": "debezium_user",
+                           		"database.password": "password",
+                           		"database.dbname": "akila",
+                           		"database.server.name": "stage.akila",
+                           		"table.include.list": "akila_admin",
+                           		"plugin.name": "wal2json",
+                           		"time.precision.mode": "connect",
+                           		"snapshot.mode": "initial"
+                           	}
+                           }
