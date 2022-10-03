@@ -114,10 +114,10 @@ function fillConnectors(divId, gConnectorsData){
                                 styling = "display: inline-block; background-color: green; color: white";
                             }
                             else if (options.value === "FAILED") {
-                                bgColor = "display: inline-block; background-color: red; color: white";
+                                styling = "display: inline-block; background-color: red; color: white";
                             }
-                            else {
-
+                            else if (options.value === "PAUSED"){
+                                styling = "display: inline-block; background-color: orange; color: white";
                             }
 
                             $('<div>')

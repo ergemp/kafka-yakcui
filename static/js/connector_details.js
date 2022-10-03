@@ -83,7 +83,10 @@ function fillStatusDetails(gStatusDetails){
     let retVal = "";
 
     if (obj.tasks[0].state === "RUNNING"){
-        retVal +=  "<div style='width:77%;' ><p> <h5 style='background-color: green; color: white'>RUNNING</h5> </p></div>" ;
+        retVal +=  "<div style='width:80%;' ><p> <h5 style='background-color: green; color: white'><center>RUNNING</center></h5> </p></div>" ;
+    }
+    else if (obj.tasks[0].state === "FAILED") {
+        retVal +=  "<div style='width:80%;' ><p> <h5 style='background-color: red; color: white'><center>FAILED</center></h5> </p></div>" ;
     }
     else {
         retVal +=  "<p> <h5> " + obj.tasks[0].state +  "</h5> </p> ";
