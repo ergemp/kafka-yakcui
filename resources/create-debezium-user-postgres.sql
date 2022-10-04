@@ -1,5 +1,8 @@
 --create table to be captured
+create table mytable (col1 varchar(50), col2 integer, col3 bigint, col4 timestamp with time zone, col5 date);
 create table mytable (col1 varchar(50), col2 integer, col3 bigint, col4 timestamp, col5 date);
+
+alter table mytable add constraint mytable_pk primery key (col1);
 
 --create the debezium user
 create role debezium with password 'debezium';

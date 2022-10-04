@@ -181,7 +181,7 @@ function createJdbcSinkConnector(){
 
     alert (JSON.stringify(obj));
 
-    //requestNewConnector(obj);
+    requestNewConnector(obj);
 }
 
 function buildBuilder(){
@@ -262,7 +262,7 @@ let postgres_source_json = {
                            		"database.dbname": "",
                            		"database.server.name": "",
                            		"table.include.list": "",
-                           		"plugin.name": "wal2json",
+                           		"plugin.name": "pgoutput",
                            		"time.precision.mode": "connect",
                            		"snapshot.mode": "initial"
                            	}
@@ -271,7 +271,6 @@ let postgres_source_json = {
 let jdbc_sink_json = {
                        "name": "",
                        "config": {
-                            "name": "",
                             "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
                             "tasks.max": "1",
                             "dialect.name": "",
