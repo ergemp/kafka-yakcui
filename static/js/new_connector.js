@@ -6,12 +6,13 @@ let supportedPlugins = ["io.debezium.connector.postgresql.PostgresConnector",
 
 function fillPluginList(gDivId){
     let plugins;
-    let retVal = "<label style='display:block' for='pluginList'>Select Plugin: </label>";
-    retVal += "<select name='pluginList' id='pluginList' onChange='buildBuilder()'>";
+    let retVal = "";
+    retVal += "<label style='display:block' for='pluginList'>Select Plugin: </label>";
+    retVal += "<select class='form-control' name='pluginList' id='pluginList' onChange='buildBuilder()'>";
     retVal += "<option value=''> Select Option ...</option>";
 
     $.ajax({
-        url: "http://localhost:8083/connector-plugins",
+        url: kafkaConnectHost + "/connector-plugins",
         type: 'GET',
         dataType: 'json',
         async: false,
@@ -33,68 +34,68 @@ function fillPluginList(gDivId){
 
 let fileSourceTemplateHtml = "<div style='float:left;margin-right:20px;'>" +
                              "<label style='display:block' for='connectorName'>Connector Name</label>" +
-                             "<input type='text' id='connectorName' /><br/><br/>" +
+                             "<input class='form-control' type='text' id='connectorName' /><br/><br/>" +
                              "<label style='display:block' for='fileName'>File Name</label>" +
-                             "<input type='text' id='fileName' /><br/><br/>" +
+                             "<input class='form-control' type='text' id='fileName' /><br/><br/>" +
                              "<label style='display:block' for='topicName'>Topic Name</label>" +
-                             "<input type='text' id='topicName' /><br/><br/>" +
-                             "<input type='button' value='Create' onClick='createFileStreamSourceConnector()'>" +
+                             "<input class='form-control' type='text' id='topicName' /><br/><br/>" +
+                             "<input class='form-control' type='button' value='Create' onClick='createFileStreamSourceConnector()'>" +
                              "</div>"
                              ;
 
 let fileSinkTemplateHtml = "<div style='float:left;margin-right:20px;'>" +
                              "<label style='display:block' for='connectorName'>Connector Name</label>" +
-                             "<input type='text' id='connectorName' /><br/><br/>" +
+                             "<input class='form-control' type='text' id='connectorName' /><br/><br/>" +
                              "<label style='display:block' for='fileName'>File Name</label>" +
-                             "<input type='text' id='fileName' /><br/><br/>" +
+                             "<input class='form-control' type='text' id='fileName' /><br/><br/>" +
                              "<label style='display:block' for='topicName'>Topic Name</label>" +
-                             "<input type='text' id='topicName' /><br/><br/>" +
-                             "<input type='button' value='Create' onClick='createFileStreamSinkConnector()'>" +
+                             "<input class='form-control' type='text' id='topicName' /><br/><br/>" +
+                             "<input class='form-control' type='button' value='Create' onClick='createFileStreamSinkConnector()'>" +
                              "</div>"
                              ;
 
 let postgresSourceTemplateHtml = "<div style='float:left;margin-right:20px;'>" +
                              "<label style='display:block' for='connectorName'>Connector Name</label>" +
-                             "<input type='text' id='connectorName' /><br/><br/>" +
+                             "<input class='form-control' type='text' id='connectorName' /><br/><br/>" +
                              "<label style='display:block' for='hostName'>Host Name</label>" +
-                             "<input type='text' id='hostName' /><br/><br/>" +
+                             "<input class='form-control' type='text' id='hostName' /><br/><br/>" +
                              "<label style='display:block' for='port'>Port</label>" +
-                             "<input type='text' id='port' /><br/><br/>" +
+                             "<input class='form-control' type='text' id='port' /><br/><br/>" +
                              "<label style='display:block' for='userName'>User Name</label>" +
-                             "<input type='text' id='userName' /><br/><br/>" +
+                             "<input class='form-control' type='text' id='userName' /><br/><br/>" +
                              "<label style='display:block' for='password'>Password</label>" +
-                             "<input type='text' id='password' /><br/><br/>" +
+                             "<input class='form-control' type='text' id='password' /><br/><br/>" +
                              "<label style='display:block' for='dbName'>Database Name</label>" +
-                             "<input type='text' id='dbName' /><br/><br/>" +
+                             "<input class='form-control' type='text' id='dbName' /><br/><br/>" +
                              "<label style='display:block' for='serverName'>Server Name</label>" +
-                             "<input type='text' id='serverName' /><br/><br/>" +
+                             "<input class='form-control' type='text' id='serverName' /><br/><br/>" +
                              "<label style='display:block' for='tableIncludeList'>Table Include List</label>" +
-                             "<input type='text' id='tableIncludeList' /><br/><br/>" +
-                             "<input type='button' value='Create' onClick='createPostgresSourceConnector()'>" +
+                             "<input class='form-control' type='text' id='tableIncludeList' /><br/><br/>" +
+                             "<input class='form-control' type='button' value='Create' onClick='createPostgresSourceConnector()'>" +
                              "</div>"
                              ;
 
 let jdbcSinkTemplateHtml = "<div style='float:left;margin-right:20px;'>" +
                              "<label style='display:block' for='connectorName'>Connector Name</label>" +
-                             "<input type='text' id='connectorName' /><br/><br/>" +
+                             "<input class='form-control' type='text' id='connectorName' /><br/><br/>" +
                              "<label style='display:block' for='dialectName'>Dialect Name</label>" +
-                             "<select name='pluginList' id='dialectName'>" +
+                             "<select class='form-control' name='pluginList' id='dialectName'>" +
                              "<option value='OracleDatabaseDialect'>OracleDatabaseDialect</option>" +
                              "<option value='PostgreSqlDatabaseDialect'>PostgreSqlDatabaseDialect</option>" +
                              "</select><br/><br/>" +
                              "<label style='display:block' for='jdbcUrl'>JDBC Url</label>" +
-                             "<input type='text' id='jdbcUrl' /><br/><br/>" +
+                             "<input class='form-control' type='text' id='jdbcUrl' /><br/><br/>" +
                              "<label style='display:block' for='userName'>User Name</label>" +
-                             "<input type='text' id='userName' /><br/><br/>" +
+                             "<input class='form-control' type='text' id='userName' /><br/><br/>" +
                              "<label style='display:block' for='password'>Password</label>" +
-                             "<input type='text' id='password' /><br/><br/>" +
+                             "<input class='form-control' type='text' id='password' /><br/><br/>" +
                              "<label style='display:block' for='tableNameFormat'>Table Name Format</label>" +
-                             "<input type='text' id='tableNameFormat' /><br/><br/>" +
+                             "<input class='form-control' type='text' id='tableNameFormat' /><br/><br/>" +
                              "<label style='display:block' for='pkFields'>PK Fields</label>" +
-                             "<input type='text' id='pkFields' /><br/><br/>" +
+                             "<input class='form-control' type='text' id='pkFields' /><br/><br/>" +
                              "<label style='display:block' for='topics'>Topics</label>" +
-                             "<input type='text' id='topics' /><br/><br/>" +
-                             "<input type='button' value='Create' onClick='createJdbcSinkConnector()'>" +
+                             "<input class='form-control' type='text' id='topics' /><br/><br/>" +
+                             "<input class='form-control' type='button' value='Create' onClick='createJdbcSinkConnector()'>" +
                              "</div>"
                              ;
 
@@ -124,23 +125,24 @@ let oracleSourceInfoTemplateHtml = "";
 
 let oracleSourceTemplateHtml =  "<div style='float:left;margin-right:20px;'>" +
                                 "<label style='display:block' for='connectorName'>Connector Name</label>" +
-                                "<input type='text' id='connectorName' /><br/><br/>" +
-
+                                "<input class='form-control' type='text' id='connectorName' /><br/><br/>" +
                                 "<label style='display:block' for='hostName'>Host Name</label>" +
-                                "<input type='text' id='hostName' /><br/><br/>" +
+                                "<input class='form-control' type='text' id='hostName' /><br/><br/>" +
                                 "<label style='display:block' for='port'>Port</label>" +
-                                "<input type='text' id='port' /><br/><br/>" +
+                                "<input class='form-control' type='text' id='port' /><br/><br/>" +
                                 "<label style='display:block' for='userName'>User Name</label>" +
-                                "<input type='text' id='userName' /><br/><br/>" +
+                                "<input class='form-control' type='text' id='userName' /><br/><br/>" +
                                 "<label style='display:block' for='password'>Password</label>" +
-                                "<input type='text' id='password' /><br/><br/>" +
+                                "<input class='form-control' type='text' id='password' /><br/><br/>" +
                                 "<label style='display:block' for='dbName'>Database Name</label>" +
-                                "<input type='text' id='dbName' /><br/><br/>" +
+                                "<input class='form-control' type='text' id='dbName' /><br/><br/>" +
+                                "<label style='display:block' for='schemaName'>Schema Name</label>" +
+                                "<input class='form-control' type='text' id='schemaName' /><br/><br/>" +
                                 "<label style='display:block' for='serverName'>Server Name</label>" +
-                                "<input type='text' id='serverName' /><br/><br/>" +
+                                "<input class='form-control' type='text' id='serverName' /><br/><br/>" +
                                 "<label style='display:block' for='tableIncludeList'>Table Include List</label>" +
-                                "<input type='text' id='tableIncludeList' /><br/><br/>" +
-                                "<input type='button' value='Create' onClick='createPostgresSourceConnector()'>" +
+                                "<input class='form-control' type='text' id='tableIncludeList' /><br/><br/>" +
+                                "<input class='form-control' type='button' value='Create' onClick='createOracleSourceConnector()'>" +
                                 "</div>"
                                 ;
 
@@ -192,17 +194,22 @@ function createOracleSourceConnector(){
     obj = oracle_source_json ;
 
     obj.name = $("#connectorName").val();
-    obj.config["connector.class"] = "io.debezium.connector.postgresql.PostgresConnector";
+    obj.config["connector.class"] = "io.debezium.connector.oracle.OracleConnector";
     obj.config["database.hostname"] = $("#hostName").val();
     obj.config["database.port"] = $("#port").val();
     obj.config["database.user"] = $("#userName").val();
     obj.config["database.password"] = $("#password").val();
     obj.config["database.dbname"] = $("#dbName").val();
+    obj.config["database.schema"] = $("#schemaName").val();
     obj.config["database.server.name"] = $("#serverName").val();
     obj.config["table.include.list"] = $("#tableIncludeList").val();
 
-    alert (JSON.stringify(obj));
+    obj.config["database.history.kafka.bootstrap.servers"] = bootStrapServers;
+    obj.config["bootstrap.servers"] = bootStrapServers;
+    obj.config["database.history.kafka.topic"] = $("#serverName").val() + ".schema-changes";
 
+    //alert (JSON.stringify(obj));
+    console.log(obj);
     //requestNewConnector(obj);
 }
 
@@ -257,7 +264,7 @@ function buildBuilder(){
 
 function requestNewConnector(gObj){
     $.ajax({
-        url: "http://localhost:8083/connectors",
+        url: kafkaConnectHost + "/connectors",
         type: 'POST',
         dataType: 'json',
         contentType: 'application/json',
@@ -265,7 +272,7 @@ function requestNewConnector(gObj){
         async: false,
         success: function(result) {
             alert("connector created");
-            window.location.href = "http://localhost:8080";
+            window.location.href = "connectors.html";
         },
         error: function (jqXHR, exception) {
             alert (jqXHR.responseText);
@@ -319,25 +326,25 @@ let oracle_source_json = {
                              "snapshot.locking.mode": "none",
                              "database.user": "",
                              "database.dbname": "",
-                             "tasks.max": "1",
-                             "database.connection.adapter": "logminer",
-                             "database.history.kafka.bootstrap.servers": "10.200.123.125:9092",
-                             "database.history.kafka.topic": "trdev.schema-changes",
                              "database.server.name": "",
-                             "bootstrap.servers": "10.200.123.125:9092",
-                             "log.mining.strategy": "online_catalog",
-                             "database.port": "1527",
-                             "decimal.handling.mode": "double",
-                             "database.hostname": "172.16.1.117",
+                             "database.hostname": "",
                              "database.schema": "",
                              "database.password": "",
+                             "database.port": "",
+                             "database.oracle.version": "19",
+                             "tasks.max": "1",
+                             "database.connection.adapter": "logminer",
+                             "database.history.kafka.bootstrap.servers": "",
+                             "database.history.kafka.topic": "trdev.schema-changes",
                              "database.history.skip.unparseable.ddl": "true",
                              "database.history.store.only.captured.tables.ddl": "true",
-                             "database.oracle.version": "19",
+                             "bootstrap.servers": "",
+                             "log.mining.strategy": "online_catalog",
                              "table.include.list": "",
                              "snapshot.lock.timeout.ms": "5000",
                              "snapshot.mode": "initial",
                              "time.precision.mode": "connect",
+                             "decimal.handling.mode": "double"
                            }
                          }
 

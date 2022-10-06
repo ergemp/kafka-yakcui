@@ -1,11 +1,3 @@
-/*
-const connectorModel =  {
-    "name" : "",
-    "workerId": "",
-    "type": "",
-    "status" : "",
-}
-*/
 let connectorsData = [];
 let selectedConnector;
 
@@ -43,7 +35,7 @@ const popup = $('#popup').dxPopup({
         text: 'Details',
         onClick() {
             //alert("go to connector_details.html");
-            window.location.href = 'http://localhost:8080/connector_details.html?name=' + selectedConnector;
+            window.location.href = '/connector_details.html?name=' + selectedConnector;
           /*
           const message = `Email is sent to ${employee.FirstName} ${employee.LastName}`;
           DevExpress.ui.notify({
@@ -78,7 +70,7 @@ function ConnectorModel(name, workerid, type, status) {
 
 function fillClusterInfo(){
         $('#clusterId').dxDataGrid({
-            dataSource: 'http://localhost:8083',
+            dataSource: kafkaConnectHost,
             columns: ['version', 'commit', 'kafka_cluster_id'],
             showBorders: true
         });
@@ -94,7 +86,7 @@ function fillConnectors(divId, gConnectorsData){
             onSelectionChanged(selectedItems) {
               const data = selectedItems.selectedRowsData[0];
               if (data) {
-                window.location.href = 'http://localhost:8080/connector_details.html?name=' + data.name;
+                window.location.href = 'connector_details.html?name=' + data.name;
                 //selectedConnector = data.name;
                 //popup.show();
               }
@@ -132,14 +124,14 @@ function fillConnectors(divId, gConnectorsData){
 
 function getConnectors(){
     $.ajax({
-        url: "http://localhost:8083/connectors",
+        url: kafkaConnectHost + "/connectors",
         type: 'GET',
         dataType: 'json',
         async: false,
         success: function(result) {
             for(var r in result) {
                 $.ajax({
-                   url: "http://localhost:8083/connectors/"+result[r]+"/status",
+                   url: kafkaConnectHost + "/connectors/"+result[r]+"/status",
                    type: 'GET',
                    dataType: 'json',
                    async: false,
@@ -160,7 +152,7 @@ function getConnectors(){
 function getConnectorStatusResponse(gConnectorName) {
     let retVal;
     $.ajax({
-        url: "http://localhost:8083/connectors/" + gConnectorName + "/status",
+        url: kafkaConnectHost + "/connectors/" + gConnectorName + "/status",
         type: 'GET',
         dataType: 'json',
         async: false,

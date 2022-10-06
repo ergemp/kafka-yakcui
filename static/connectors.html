@@ -90,22 +90,12 @@
     <script src="vendor/devexpress/dx-quill.js"></script>
 
     <script src="js/sb-admin-2.min.js"></script>
+    <script src="js/globalParams.js"></script>
     <script src="js/connectors.js"></script>
 
     <script>
         $("#sidebar").load("include/sidebar.html");
         $("#topbar").load("include/topbar.html");
-
-        /*
-        $.ajax({
-        url: "http://localhost:8083",
-        type: 'GET',
-        success: function(res) {
-            console.log(res);
-            alert(res);
-        }
-        });
-        */
 
         let connectors = getConnectors();
         console.log(connectors);

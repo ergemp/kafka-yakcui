@@ -1,6 +1,6 @@
 function fillPlugins(divId){
         $("#" + divId).dxDataGrid({
-            dataSource: "http://localhost:8083/connector-plugins",
+            dataSource: kafkaConnectHost + "/connector-plugins",
             selection: {
               mode: 'single',
             },

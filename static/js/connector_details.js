@@ -9,7 +9,7 @@ function get(name){
 function getConnectorConfig(gConnectorName) {
     let retVal;
     $.ajax({
-        url: "http://localhost:8083/connectors/" + gConnectorName + "",
+        url: kafkaConnectHost + "/connectors/" + gConnectorName + "",
         type: 'GET',
         dataType: 'json',
         async: false,
@@ -23,7 +23,7 @@ function getConnectorConfig(gConnectorName) {
 function getConnectorStatus(gConnectorName) {
     let retVal;
     $.ajax({
-        url: "http://localhost:8083/connectors/" + gConnectorName + "/status",
+        url: kafkaConnectHost + "/connectors/" + gConnectorName + "/status",
         type: 'GET',
         dataType: 'json',
         async: false,
@@ -116,7 +116,7 @@ function fillStatusDetails(gStatusDetails){
 
 function pauseConnector(gConnectorName) {
     $.ajax({
-        url: "http://localhost:8083/connectors/" + gConnectorName + "/pause",
+        url: kafkaConnectHost + "/connectors/" + gConnectorName + "/pause",
         type: 'PUT',
         dataType: 'json',
         async: false,
@@ -129,7 +129,7 @@ function pauseConnector(gConnectorName) {
 
 function resumeConnector(gConnectorName) {
     $.ajax({
-        url: "http://localhost:8083/connectors/" + gConnectorName + "/resume",
+        url: kafkaConnectHost + "/connectors/" + gConnectorName + "/resume",
         type: 'PUT',
         dataType: 'json',
         async: false,
@@ -142,7 +142,7 @@ function resumeConnector(gConnectorName) {
 
 function restartConnector(gConnectorName) {
     $.ajax({
-        url: "http://localhost:8083/connectors/" + gConnectorName + "/restart?includeTasks=true",
+        url: kafkaConnectHost + "/connectors/" + gConnectorName + "/restart?includeTasks=true",
         type: 'POST',
         dataType: 'json',
         async: false,
@@ -155,7 +155,7 @@ function restartConnector(gConnectorName) {
 
 function deleteConnector(gConnectorName) {
     $.ajax({
-        url: "http://localhost:8083/connectors/" + gConnectorName + "",
+        url: kafkaConnectHost + "/connectors/" + gConnectorName + "",
         type: 'DELETE',
         dataType: 'json',
         async: false,
@@ -163,6 +163,6 @@ function deleteConnector(gConnectorName) {
         }
     });
     alert("connector deleted");
-    window.location.href = "http://localhost:8080/connectors.html";
+    window.location.href = "/connectors.html";
 }
 

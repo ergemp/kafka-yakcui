@@ -72,13 +72,13 @@
                             <p><h3>Connector Status</h3></p><br/>
                             <div id="statusDetails"></div><br/>
                             <div style="display: block;">
-                                <textarea style="width:80%" id="connectorStatus" name="Connector Status" rows="25" cols="50" readonly></textarea>
+                                <textarea class='form-control' style="width:80%" id="connectorStatus" name="Connector Status" rows="25" cols="50" readonly></textarea>
                             </div>
                         </div>
                         <div class="col md-6">
                             <p><h3>Connector Config</h3></p><br/>
                             <div id="connectorDetails"></div><br/>
-                            <textarea style="width:80%" id="connectorConfig" name="Connector Config" rows="25" cols="50" readonly></textarea>
+                            <textarea class='form-control' style="width:80%" id="connectorConfig" name="Connector Config" rows="25" cols="50" readonly></textarea>
                         </div>
                     </div>
 
@@ -112,6 +112,8 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
+
+    <script src="js/globalParams.js"></script>
     <script src="js/connector_details.js"></script>
 
     <script>
