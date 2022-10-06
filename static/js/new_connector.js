@@ -1,7 +1,8 @@
 let supportedPlugins = ["io.debezium.connector.postgresql.PostgresConnector",
                         "org.apache.kafka.connect.file.FileStreamSinkConnector",
                         "org.apache.kafka.connect.file.FileStreamSourceConnector",
-                        "io.confluent.connect.jdbc.JdbcSinkConnector"]
+                        "io.confluent.connect.jdbc.JdbcSinkConnector",
+                        "io.debezium.connector.oracle.OracleConnector"]
 
 function fillPluginList(gDivId){
     let plugins;
@@ -119,8 +120,29 @@ let postgresSourceInfoTemplateHtml =    "<h5>Create Postgres Debezium User</h5>"
                                         "</pre></p>"
                                 ;
 
+let oracleSourceInfoTemplateHtml = "";
 
+let oracleSourceTemplateHtml =  "<div style='float:left;margin-right:20px;'>" +
+                                "<label style='display:block' for='connectorName'>Connector Name</label>" +
+                                "<input type='text' id='connectorName' /><br/><br/>" +
 
+                                "<label style='display:block' for='hostName'>Host Name</label>" +
+                                "<input type='text' id='hostName' /><br/><br/>" +
+                                "<label style='display:block' for='port'>Port</label>" +
+                                "<input type='text' id='port' /><br/><br/>" +
+                                "<label style='display:block' for='userName'>User Name</label>" +
+                                "<input type='text' id='userName' /><br/><br/>" +
+                                "<label style='display:block' for='password'>Password</label>" +
+                                "<input type='text' id='password' /><br/><br/>" +
+                                "<label style='display:block' for='dbName'>Database Name</label>" +
+                                "<input type='text' id='dbName' /><br/><br/>" +
+                                "<label style='display:block' for='serverName'>Server Name</label>" +
+                                "<input type='text' id='serverName' /><br/><br/>" +
+                                "<label style='display:block' for='tableIncludeList'>Table Include List</label>" +
+                                "<input type='text' id='tableIncludeList' /><br/><br/>" +
+                                "<input type='button' value='Create' onClick='createPostgresSourceConnector()'>" +
+                                "</div>"
+                                ;
 
 function createFileStreamSourceConnector(){
     obj = file_source_json ;
@@ -166,6 +188,24 @@ function createPostgresSourceConnector(){
     requestNewConnector(obj);
 }
 
+function createOracleSourceConnector(){
+    obj = oracle_source_json ;
+
+    obj.name = $("#connectorName").val();
+    obj.config["connector.class"] = "io.debezium.connector.postgresql.PostgresConnector";
+    obj.config["database.hostname"] = $("#hostName").val();
+    obj.config["database.port"] = $("#port").val();
+    obj.config["database.user"] = $("#userName").val();
+    obj.config["database.password"] = $("#password").val();
+    obj.config["database.dbname"] = $("#dbName").val();
+    obj.config["database.server.name"] = $("#serverName").val();
+    obj.config["table.include.list"] = $("#tableIncludeList").val();
+
+    alert (JSON.stringify(obj));
+
+    //requestNewConnector(obj);
+}
+
 function createJdbcSinkConnector(){
     obj = jdbc_sink_json ;
 
@@ -199,6 +239,10 @@ function buildBuilder(){
         else if(selectedItem === "io.debezium.connector.postgresql.PostgresConnector") {
             $("#newConnectorForm").html(postgresSourceTemplateHtml);
             $("#newConnectorInfo").html(postgresSourceInfoTemplateHtml);
+        }
+        else if(selectedItem === "io.debezium.connector.oracle.OracleConnector") {
+            $("#newConnectorForm").html(oracleSourceTemplateHtml);
+            $("#newConnectorInfo").html(oracleSourceInfoTemplateHtml);
         }
         else if(selectedItem === "io.confluent.connect.jdbc.JdbcSinkConnector") {
             $("#newConnectorForm").html(jdbcSinkTemplateHtml);
@@ -268,6 +312,35 @@ let postgres_source_json = {
                            	}
                            }
 
+let oracle_source_json = {
+                           "name": "",
+                           "config": {
+                             "connector.class": "io.debezium.connector.oracle.OracleConnector",
+                             "snapshot.locking.mode": "none",
+                             "database.user": "",
+                             "database.dbname": "",
+                             "tasks.max": "1",
+                             "database.connection.adapter": "logminer",
+                             "database.history.kafka.bootstrap.servers": "10.200.123.125:9092",
+                             "database.history.kafka.topic": "trdev.schema-changes",
+                             "database.server.name": "",
+                             "bootstrap.servers": "10.200.123.125:9092",
+                             "log.mining.strategy": "online_catalog",
+                             "database.port": "1527",
+                             "decimal.handling.mode": "double",
+                             "database.hostname": "172.16.1.117",
+                             "database.schema": "",
+                             "database.password": "",
+                             "database.history.skip.unparseable.ddl": "true",
+                             "database.history.store.only.captured.tables.ddl": "true",
+                             "database.oracle.version": "19",
+                             "table.include.list": "",
+                             "snapshot.lock.timeout.ms": "5000",
+                             "snapshot.mode": "initial",
+                             "time.precision.mode": "connect",
+                           }
+                         }
+
 let jdbc_sink_json = {
                        "name": "",
                        "config": {
@@ -291,8 +364,6 @@ let jdbc_sink_json = {
                             "insert.mode": "upsert"
                        }
                      }
-
-
 
 
 
