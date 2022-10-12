@@ -38,17 +38,17 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                     </div>
-                                    <form class="user">
+                                    <form class="user" id="user">
                                         <div class="form-group">
                                             <input type="username" class="form-control form-control-user"
-                                                id="exampleInputUsername" aria-describedby="emailHelp"
+                                                id="username" aria-describedby="emailHelp"
                                                 placeholder="Enter Username...">
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="Password">
+                                                id="password" placeholder="Password">
                                         </div>
-                                        <a href="index.html" class="btn btn-primary btn-user btn-block">
+                                        <a class="btn btn-primary btn-user btn-block" onclick="submitUserForm();">
                                             Login
                                         </a>
                                         <hr>
@@ -72,6 +72,34 @@
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
 
+    <script src="vendor/jquery.md5.js"></script>
+    <script src="js/globalParams.js"></script>
+    <script src="js/auth.js"></script>
+
+    <script>
+        function submitUserForm(){
+
+            let userInfo = {"username":"","password":""};
+
+            userInfo.username = $("#username").val();
+            userInfo.password = btoa($("#password").val());
+
+            $.ajax({
+                url: tokenApi,
+                type: 'post',
+                dataType: 'text',
+                contentType: 'text/plain',
+                async: false,
+                data: JSON.stringify(userInfo),
+                success: function(data) {
+                            //console.log(data);
+                            //console.log(parseJwt(data));
+                            localStorage.Jwt = data;
+                            window.location.href="connectors.html";
+                         }
+            });
+        }
+    </script>
 </body>
 
 </html>

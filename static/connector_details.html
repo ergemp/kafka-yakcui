@@ -116,7 +116,11 @@
     <script src="js/globalParams.js"></script>
     <script src="js/connector_details.js"></script>
 
+    <script src="js/auth.js"></script>
+
     <script>
+
+        checkJwt();
 
         connectorConfigJson = getConnectorConfig(get("name")) ;
         connectorStatusJson = getConnectorStatus(get("name")) ;

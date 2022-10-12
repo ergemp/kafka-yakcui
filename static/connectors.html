@@ -93,12 +93,17 @@
     <script src="js/globalParams.js"></script>
     <script src="js/connectors.js"></script>
 
+    <script src="js/auth.js"></script>
+
     <script>
+
+        checkJwt();
+
         $("#sidebar").load("include/sidebar.html");
         $("#topbar").load("include/topbar.html");
 
         let connectors = getConnectors();
-        console.log(connectors);
+        //console.log(connectors);
         fillConnectors("connectorList", connectors);
         fillClusterInfo();
     </script>
