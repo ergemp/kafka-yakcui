@@ -1,0 +1,10 @@
+Add "time.precision.mode": "connect" to your connector config.
+
+{
+    "transforms":"unwrap,col2",
+    "transforms.col2.type":"org.apache.kafka.connect.transforms.TimestampConverter$Value",
+    "transforms.col2.target.type":"string",
+    "transforms.col2.field":"col2",
+    "transforms.col2.format":"YYYY-MM-DD hh:mm:ss" ,
+    "time.precision.mode":"connect"
+}

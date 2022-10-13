@@ -8,6 +8,8 @@ alter table mytable add constraint mytable_pk primery key (col1);
 create role debezium with password 'debezium';
 alter role debezium with replication login;
 grant usage on schema public to debezium;
+grant all privileges on database postgres to debezium;
+
 
 --grant the ownership of the table to debezium
 grant debezium to postgres;

@@ -40,6 +40,7 @@ let fileSourceTemplateHtml = "<div style='float:left;margin-right:20px;'>" +
                              "<label style='display:block' for='topicName'>Topic Name</label>" +
                              "<input class='form-control' type='text' id='topicName' /><br/><br/>" +
                              "<input class='form-control' type='button' value='Create' onClick='createFileStreamSourceConnector()'>" +
+                             "<br/><br/>" +
                              "</div>"
                              ;
 
@@ -51,16 +52,20 @@ let fileSinkTemplateHtml = "<div style='float:left;margin-right:20px;'>" +
                              "<label style='display:block' for='topicName'>Topic Name</label>" +
                              "<input class='form-control' type='text' id='topicName' /><br/><br/>" +
                              "<input class='form-control' type='button' value='Create' onClick='createFileStreamSinkConnector()'>" +
+                             "<br/><br/>" +
                              "</div>"
                              ;
 
 let postgresSourceTemplateHtml = "<div style='float:left;margin-right:20px;'>" +
                              "<label style='display:block' for='connectorName'>Connector Name</label>" +
-                             "<input class='form-control' type='text' id='connectorName' /><br/><br/>" +
+                             "<input class='form-control' type='text' id='connectorName' />" +
+                             "<small id='connectorNameHelp' class='form-text text-muted'>The name of the connector</small> <br/><br/> " +
                              "<label style='display:block' for='hostName'>Host Name</label>" +
-                             "<input class='form-control' type='text' id='hostName' /><br/><br/>" +
+                             "<input class='form-control' type='text' id='hostName' />" +
+                             "<small id='connectorNameHelp' class='form-text text-muted'>Hostname of the source database to be replicated to kafka</small> <br/><br/> " +
                              "<label style='display:block' for='port'>Port</label>" +
-                             "<input class='form-control' type='text' id='port' /><br/><br/>" +
+                             "<input class='form-control' type='text' id='port' />" +
+                             "<small id='connectorNameHelp' class='form-text text-muted'>Port of the database listener</small> <br/><br/> " +
                              "<label style='display:block' for='userName'>User Name</label>" +
                              "<input class='form-control' type='text' id='userName' /><br/><br/>" +
                              "<label style='display:block' for='password'>Password</label>" +
@@ -68,10 +73,14 @@ let postgresSourceTemplateHtml = "<div style='float:left;margin-right:20px;'>" +
                              "<label style='display:block' for='dbName'>Database Name</label>" +
                              "<input class='form-control' type='text' id='dbName' /><br/><br/>" +
                              "<label style='display:block' for='serverName'>Server Name</label>" +
-                             "<input class='form-control' type='text' id='serverName' /><br/><br/>" +
+                             "<input class='form-control' type='text' id='serverName' />" +
+                             "<small id='connectorNameHelp' class='form-text text-muted'>Logical name, will be used to create topics to distinguish different databases</small> <br/><br/> " +
                              "<label style='display:block' for='tableIncludeList'>Table Include List</label>" +
-                             "<input class='form-control' type='text' id='tableIncludeList' /><br/><br/>" +
+                             "<input class='form-control' type='text' id='tableIncludeList' />" +
+                             "<small id='connectorNameHelp' class='form-text text-muted'>Table to be captures should be in schema_name.table_name format. </small> " +
+                             "<small id='connectorNameHelp' class='form-text text-muted'>Multiple tables may be entered with comma separated</small> <br/><br/> " +
                              "<input class='form-control' type='button' value='Create' onClick='createPostgresSourceConnector()'>" +
+                             "<br/><br/>" +
                              "</div>"
                              ;
 
@@ -96,6 +105,7 @@ let jdbcSinkTemplateHtml = "<div style='float:left;margin-right:20px;'>" +
                              "<label style='display:block' for='topics'>Topics</label>" +
                              "<input class='form-control' type='text' id='topics' /><br/><br/>" +
                              "<input class='form-control' type='button' value='Create' onClick='createJdbcSinkConnector()'>" +
+                             "<br/><br/>" +
                              "</div>"
                              ;
 
@@ -104,20 +114,25 @@ let jdbcSinkInfoTemplateHtml =  "<h5>Postgres JDBC Template</h5><p>jdbc:postgres
                                 ;
 
 let postgresSourceInfoTemplateHtml =    "<h5>Create Postgres Debezium User</h5>" +
+                                        " <br/><br/>" +
                                         "<p><pre>" +
+                                        "--configure postgresql database <br/>" +
+                                        "set wal_level to logical <br/>" +
+                                        " <br/><br/>" +
                                         "--create the debezium user <br/>" +
-                                        "create role debezium with password 'debezium';<br/>" +
-                                        "alter role debezium with replication login;<br/>" +
+                                        "create role debezium with replication login;<br/>" +
+                                        "alter role debezium with password 'debezium';<br/>" +
                                         "grant usage on schema public to debezium;<br/>" +
+                                        "grant all privileges on database postgres to debezium;<br/>" +
                                         " <br/><br/>" +
                                         "--grant the ownership of the table to debezium<br/>" +
                                         "grant debezium to postgres;<br/>" +
                                         "alter table mytable owner to debezium;<br/>" +
                                         " <br/><br/>" +
                                         "--pg_hba.conf<br/>" +
-                                        "local   replication     <youruser>                          trust<br/>" +
-                                        "host    replication     <youruser>  127.0.0.1/32            trust<br/>" +
-                                        "host    replication     <youruser>  ::1/128                 trust<br/>" +
+                                        "local   replication     debezium                          trust<br/>" +
+                                        "host    replication     debezium  127.0.0.1/32            trust<br/>" +
+                                        "host    replication     debezium  ::1/128                 trust<br/>" +
                                         "</pre></p>"
                                 ;
 
@@ -125,11 +140,14 @@ let oracleSourceInfoTemplateHtml = "";
 
 let oracleSourceTemplateHtml =  "<div style='float:left;margin-right:20px;'>" +
                                 "<label style='display:block' for='connectorName'>Connector Name</label>" +
-                                "<input class='form-control' type='text' id='connectorName' /><br/><br/>" +
+                                "<input class='form-control' type='text' id='connectorName' />" +
+                                "<small id='connectorNameHelp' class='form-text text-muted'>The name of the connector</small> <br/><br/> " +
                                 "<label style='display:block' for='hostName'>Host Name</label>" +
-                                "<input class='form-control' type='text' id='hostName' /><br/><br/>" +
+                                "<input class='form-control' type='text' id='hostName' />" +
+                                 "<small id='connectorNameHelp' class='form-text text-muted'>Hostname of the source database to be replicated to kafka</small> <br/><br/> " +
                                 "<label style='display:block' for='port'>Port</label>" +
-                                "<input class='form-control' type='text' id='port' /><br/><br/>" +
+                                "<input class='form-control' type='text' id='port' />" +
+                                "<small id='connectorNameHelp' class='form-text text-muted'>Port of the database listener</small> <br/><br/> " +
                                 "<label style='display:block' for='userName'>User Name</label>" +
                                 "<input class='form-control' type='text' id='userName' /><br/><br/>" +
                                 "<label style='display:block' for='password'>Password</label>" +
@@ -139,10 +157,14 @@ let oracleSourceTemplateHtml =  "<div style='float:left;margin-right:20px;'>" +
                                 "<label style='display:block' for='schemaName'>Schema Name</label>" +
                                 "<input class='form-control' type='text' id='schemaName' /><br/><br/>" +
                                 "<label style='display:block' for='serverName'>Server Name</label>" +
-                                "<input class='form-control' type='text' id='serverName' /><br/><br/>" +
+                                "<input class='form-control' type='text' id='serverName' />" +
+                                "<small id='connectorNameHelp' class='form-text text-muted'>Logical name, will be used to create topics to distinguish different databases</small> <br/><br/> " +
                                 "<label style='display:block' for='tableIncludeList'>Table Include List</label>" +
-                                "<input class='form-control' type='text' id='tableIncludeList' /><br/><br/>" +
+                                "<input class='form-control' type='text' id='tableIncludeList' />" +
+                                "<small id='connectorNameHelp' class='form-text text-muted'>Table to be captures should be in schema_name.table_name format. </small> " +
+                                "<small id='connectorNameHelp' class='form-text text-muted'>Multiple tables may be entered with comma separated</small> <br/><br/> " +
                                 "<input class='form-control' type='button' value='Create' onClick='createOracleSourceConnector()'>" +
+                                "<br/><br/>" +
                                 "</div>"
                                 ;
 
