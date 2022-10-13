@@ -96,7 +96,10 @@
                             //console.log(parseJwt(data));
                             localStorage.Jwt = data;
                             window.location.href="connectors.html";
-                         }
+                         },
+                error: function (jqXHR, exception) {
+                        alert(jqXHR.status + ' ' + jqXHR.responseText);
+                    }
             });
         }
     </script>
