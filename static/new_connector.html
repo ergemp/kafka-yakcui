@@ -115,7 +115,7 @@
         fillPluginList("pluginList");
 
         $(document).ready(function() {
-            $("#username").text("tt");
+            $("#username").text(parseJwt(localStorage.Jwt).username);
         });
 
     </script>

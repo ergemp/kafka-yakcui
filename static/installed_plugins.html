@@ -100,6 +100,10 @@
         $("#topbar").load("include/topbar.html");
 
         fillPlugins("pluginList");
+
+        $(document).ready(function() {
+            $("#username").text(parseJwt(localStorage.Jwt).username);
+        });
     </script>
 
 </body>

@@ -103,9 +103,12 @@
         $("#topbar").load("include/topbar.html");
 
         let connectors = getConnectors();
-        //console.log(connectors);
         fillConnectors("connectorList", connectors);
         fillClusterInfo();
+
+        $(document).ready(function() {
+            $("#username").text(parseJwt(localStorage.Jwt).username);
+        });
     </script>
 
 </body>

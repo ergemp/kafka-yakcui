@@ -136,6 +136,10 @@
         $("#connectorDetails").html(fillConnectorDetails(connectorConfigJson));
         $("#statusDetails").html(fillStatusDetails(connectorStatusJson));
 
+        $(document).ready(function() {
+            $("#username").text(parseJwt(localStorage.Jwt).username);
+        });
+
     </script>
 </body>
 

@@ -34,11 +34,14 @@ function fillPluginList(gDivId){
 
 let fileSourceTemplateHtml = "<div style='float:left;margin-right:20px;'>" +
                              "<label style='display:block' for='connectorName'>Connector Name</label>" +
-                             "<input class='form-control' type='text' id='connectorName' /><br/><br/>" +
+                             "<input class='form-control' type='text' id='connectorName' />" +
+                             "<small id='connectorNameHelp' class='form-text text-muted'>The name of the connector</small> <br/><br/> " +
                              "<label style='display:block' for='fileName'>File Name</label>" +
-                             "<input class='form-control' type='text' id='fileName' /><br/><br/>" +
+                             "<input class='form-control' type='text' id='fileName' />" +
+                             "<small id='connectorNameHelp' class='form-text text-muted'>Full path of the file to read from</small> <br/><br/> " +
                              "<label style='display:block' for='topicName'>Topic Name</label>" +
-                             "<input class='form-control' type='text' id='topicName' /><br/><br/>" +
+                             "<input class='form-control' type='text' id='topicName' />" +
+                             "<small id='connectorNameHelp' class='form-text text-muted'>Topic to write to</small> <br/><br/> " +
                              "<input class='form-control' type='button' value='Create' onClick='createFileStreamSourceConnector()'>" +
                              "<br/><br/>" +
                              "</div>"
@@ -46,11 +49,14 @@ let fileSourceTemplateHtml = "<div style='float:left;margin-right:20px;'>" +
 
 let fileSinkTemplateHtml = "<div style='float:left;margin-right:20px;'>" +
                              "<label style='display:block' for='connectorName'>Connector Name</label>" +
-                             "<input class='form-control' type='text' id='connectorName' /><br/><br/>" +
+                             "<input class='form-control' type='text' id='connectorName' />" +
+                             "<small id='connectorNameHelp' class='form-text text-muted'>The name of the connector</small> <br/><br/> " +
                              "<label style='display:block' for='fileName'>File Name</label>" +
-                             "<input class='form-control' type='text' id='fileName' /><br/><br/>" +
+                             "<input class='form-control' type='text' id='fileName' />" +
+                             "<small id='connectorNameHelp' class='form-text text-muted'>Full path of the file to write to</small> <br/><br/> " +
                              "<label style='display:block' for='topicName'>Topic Name</label>" +
-                             "<input class='form-control' type='text' id='topicName' /><br/><br/>" +
+                             "<input class='form-control' type='text' id='topicName' />" +
+                             "<small id='connectorNameHelp' class='form-text text-muted'>Topic to read from</small> <br/><br/> " +
                              "<input class='form-control' type='button' value='Create' onClick='createFileStreamSinkConnector()'>" +
                              "<br/><br/>" +
                              "</div>"
@@ -69,7 +75,7 @@ let postgresSourceTemplateHtml = "<div style='float:left;margin-right:20px;'>" +
                              "<label style='display:block' for='userName'>User Name</label>" +
                              "<input class='form-control' type='text' id='userName' /><br/><br/>" +
                              "<label style='display:block' for='password'>Password</label>" +
-                             "<input class='form-control' type='text' id='password' /><br/><br/>" +
+                             "<input class='form-control' type='password' id='password' /><br/><br/>" +
                              "<label style='display:block' for='dbName'>Database Name</label>" +
                              "<input class='form-control' type='text' id='dbName' /><br/><br/>" +
                              "<label style='display:block' for='serverName'>Server Name</label>" +
@@ -86,39 +92,47 @@ let postgresSourceTemplateHtml = "<div style='float:left;margin-right:20px;'>" +
 
 let jdbcSinkTemplateHtml = "<div style='float:left;margin-right:20px;'>" +
                              "<label style='display:block' for='connectorName'>Connector Name</label>" +
-                             "<input class='form-control' type='text' id='connectorName' /><br/><br/>" +
+                             "<input class='form-control' type='text' id='connectorName' />" +
+                             "<small id='connectorNameHelp' class='form-text text-muted'>The name of the connector</small> <br/><br/> " +
                              "<label style='display:block' for='dialectName'>Dialect Name</label>" +
                              "<select class='form-control' name='pluginList' id='dialectName'>" +
                              "<option value='OracleDatabaseDialect'>OracleDatabaseDialect</option>" +
                              "<option value='PostgreSqlDatabaseDialect'>PostgreSqlDatabaseDialect</option>" +
-                             "</select><br/><br/>" +
+                             "</select>" +
+                             "<small id='connectorNameHelp' class='form-text text-muted'>Select the target database dialect.</small> <br/><br/> " +
                              "<label style='display:block' for='jdbcUrl'>JDBC Url</label>" +
-                             "<input class='form-control' type='text' id='jdbcUrl' /><br/><br/>" +
+                             "<input class='form-control' type='text' id='jdbcUrl' />" +
+                             "<small id='connectorNameHelp' class='form-text text-muted'>Jdbc connection url for the target database</small> " +
+                             "<small id='connectorNameHelp' class='form-text text-muted'>Templates can be found in the Info section</small> <br/><br/> " +
                              "<label style='display:block' for='userName'>User Name</label>" +
-                             "<input class='form-control' type='text' id='userName' /><br/><br/>" +
+                             "<input class='form-control' type='text' id='userName' />" +
+                             "<small id='connectorNameHelp' class='form-text text-muted'>Target Database Username</small> <br/><br/> " +
                              "<label style='display:block' for='password'>Password</label>" +
-                             "<input class='form-control' type='text' id='password' /><br/><br/>" +
+                             "<input class='form-control' type='password' id='password' />" +
+                             "<small id='connectorNameHelp' class='form-text text-muted'>Target Database Password</small> <br/><br/> " +
                              "<label style='display:block' for='tableNameFormat'>Table Name Format</label>" +
-                             "<input class='form-control' type='text' id='tableNameFormat' /><br/><br/>" +
+                             "<input class='form-control' type='text' id='tableNameFormat' />" +
+                             "<small id='connectorNameHelp' class='form-text text-muted'>Table name on the target database</small> <br/><br/> " +
                              "<label style='display:block' for='pkFields'>PK Fields</label>" +
-                             "<input class='form-control' type='text' id='pkFields' /><br/><br/>" +
+                             "<input class='form-control' type='text' id='pkFields' />" +
+                             "<small id='connectorNameHelp' class='form-text text-muted'>PK field name(s), For multiple fields, enter comma separated</small> <br/><br/>" +
                              "<label style='display:block' for='topics'>Topics</label>" +
-                             "<input class='form-control' type='text' id='topics' /><br/><br/>" +
+                             "<input class='form-control' type='text' id='topics' />" +
+                             "<small id='connectorNameHelp' class='form-text text-muted'>Kafka Topic to read from </small>" +
+                             "<small id='connectorNameHelp' class='form-text text-muted'>The topic debezium writes the cdc records </small> <br/><br/> " +
                              "<input class='form-control' type='button' value='Create' onClick='createJdbcSinkConnector()'>" +
                              "<br/><br/>" +
                              "</div>"
                              ;
 
-let jdbcSinkInfoTemplateHtml =  "<h5>Postgres JDBC Template</h5><p>jdbc:postgresql://database_host:database_port/database_name</p>" +
-                                "<h5>Oracle JDBC Template</h5><p>jdbc:oracle:thin:@database_host:database_port:database_name</p>"
+let jdbcSinkInfoTemplateHtml =  "<br/><br/><h5>Postgres JDBC Template</h5><br/><br/><p>jdbc:postgresql://database_host:database_port/database_name</p>" +
+                                "<br/><br/><h5>Oracle JDBC Template</h5><br/><br/><p>jdbc:oracle:thin:@database_host:database_port:database_name</p>"
                                 ;
 
-let postgresSourceInfoTemplateHtml =    "<h5>Create Postgres Debezium User</h5>" +
-                                        " <br/><br/>" +
+let postgresSourceInfoTemplateHtml =    "<br/><br/>" +
+                                        "<h5>Create Postgres Debezium User</h5>" +
+                                        "<br/><br/>" +
                                         "<p><pre>" +
-                                        "--configure postgresql database <br/>" +
-                                        "set wal_level to logical <br/>" +
-                                        " <br/><br/>" +
                                         "--create the debezium user <br/>" +
                                         "create role debezium with replication login;<br/>" +
                                         "alter role debezium with password 'debezium';<br/>" +
@@ -128,7 +142,13 @@ let postgresSourceInfoTemplateHtml =    "<h5>Create Postgres Debezium User</h5>"
                                         "--grant the ownership of the table to debezium<br/>" +
                                         "grant debezium to postgres;<br/>" +
                                         "alter table mytable owner to debezium;<br/>" +
+                                        "</pre></p>" +
                                         " <br/><br/>" +
+                                        "<h5>Configure Database</h5>" +
+                                        "<br/><br/>" +
+                                        "<p><pre>" +
+                                        "set wal_level to logical <br/>" +
+                                        "<br/><br/>" +
                                         "--pg_hba.conf<br/>" +
                                         "local   replication     debezium                          trust<br/>" +
                                         "host    replication     debezium  127.0.0.1/32            trust<br/>" +
@@ -136,7 +156,51 @@ let postgresSourceInfoTemplateHtml =    "<h5>Create Postgres Debezium User</h5>"
                                         "</pre></p>"
                                 ;
 
-let oracleSourceInfoTemplateHtml = "";
+let oracleSourceInfoTemplateHtml =
+                                   "<br/><br/>" +
+                                   "<h5>Create Oracle Debezium User</h5>" +
+                                   "<br/><br/>" +
+                                   "<p><pre>" +
+                                   "CREATE USER DEBEZIUM <br/>" +
+                                   "IDENTIFIED BY password <br/>" +
+                                   "PROFILE DEFAULT <br/>" +
+                                   "ACCOUNT UNLOCK; <br/>" +
+                                   "-- 2 Roles for DEBEZIUM <br/>" +
+                                   "GRANT EXECUTE_CATALOG_ROLE TO DEBEZIUM; <br/>" +
+                                   "GRANT SELECT_CATALOG_ROLE TO DEBEZIUM; <br/>" +
+                                   "ALTER USER DEBEZIUM DEFAULT ROLE ALL; <br/>" +
+                                   "-- 9 System Privileges for DEBEZIUM <br/>" +
+                                   "GRANT CREATE SEQUENCE TO DEBEZIUM; <br/>" +
+                                   "GRANT CREATE SESSION TO DEBEZIUM; <br/>" +
+                                   "GRANT CREATE TABLE TO DEBEZIUM; <br/>" +
+                                   "GRANT FLASHBACK ANY TABLE TO DEBEZIUM; <br/>" +
+                                   "GRANT LOGMINING TO DEBEZIUM; <br/>" +
+                                   "GRANT SELECT ANY DICTIONARY TO DEBEZIUM; <br/>" +
+                                   "GRANT SELECT ANY TABLE TO DEBEZIUM; <br/>" +
+                                   "GRANT SELECT ANY TRANSACTION TO DEBEZIUM; <br/>" +
+                                   "GRANT UNLIMITED TABLESPACE TO DEBEZIUM; <br/>" +
+                                   "-- 11 Object Privileges for DEBEZIUM <br/>" +
+                                   "GRANT EXECUTE ON SYS.DBMS_LOGMNR TO DEBEZIUM; <br/>" +
+                                   "GRANT EXECUTE ON SYS.DBMS_LOGMNR_D TO DEBEZIUM; <br/>" +
+                                   "GRANT SELECT ON SYS.V_$ARCHIVED_LOG TO DEBEZIUM; <br/>" +
+                                   "GRANT SELECT ON SYS.V_$ARCHIVE_DEST_STATUS TO DEBEZIUM; <br/>" +
+                                   "GRANT SELECT ON SYS.V_$DATABASE TO DEBEZIUM; <br/>" +
+                                   "GRANT SELECT ON SYS.V_$LOG TO DEBEZIUM; <br/>" +
+                                   "GRANT SELECT ON SYS.V_$LOGFILE TO DEBEZIUM; <br/>" +
+                                   "GRANT SELECT ON SYS.V_$LOGMNR_CONTENTS TO DEBEZIUM; <br/>" +
+                                   "GRANT SELECT ON SYS.V_$LOGMNR_LOGS TO DEBEZIUM; <br/>" +
+                                   "GRANT SELECT ON SYS.V_$LOGMNR_PARAMETERS TO DEBEZIUM; <br/>" +
+                                   "GRANT SELECT ON SYS.V_$LOG_HISTORY TO DEBEZIUM; <br/>" +
+                                   "</pre></p>" +
+                                   " <br/><br/>" +
+                                   "<h5>Configure Database</h5>" +
+                                   "<br/><br/>" +
+                                   "<p><pre>" +
+                                   "alter database archivelog;<br/>" +
+                                   "alter database add supplemental log data;<br/>" +
+                                   "alter table table_name add supplemental log data (all) columns;<br/>" +
+                                   "</pre></p>"
+
 
 let oracleSourceTemplateHtml =  "<div style='float:left;margin-right:20px;'>" +
                                 "<label style='display:block' for='connectorName'>Connector Name</label>" +
@@ -151,7 +215,7 @@ let oracleSourceTemplateHtml =  "<div style='float:left;margin-right:20px;'>" +
                                 "<label style='display:block' for='userName'>User Name</label>" +
                                 "<input class='form-control' type='text' id='userName' /><br/><br/>" +
                                 "<label style='display:block' for='password'>Password</label>" +
-                                "<input class='form-control' type='text' id='password' /><br/><br/>" +
+                                "<input class='form-control' type='password' id='password' /><br/><br/>" +
                                 "<label style='display:block' for='dbName'>Database Name</label>" +
                                 "<input class='form-control' type='text' id='dbName' /><br/><br/>" +
                                 "<label style='display:block' for='schemaName'>Schema Name</label>" +
