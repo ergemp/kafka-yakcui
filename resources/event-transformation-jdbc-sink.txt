@@ -8,3 +8,53 @@ Add "time.precision.mode": "connect" to your connector config.
     "transforms.col2.format":"YYYY-MM-DD hh:mm:ss" ,
     "time.precision.mode":"connect"
 }
+
+--
+--
+--
+
+https://docs.confluent.io/platform/current/connect/transforms/timestampconverter.html#timestampconverter
+https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html
+
+The following provides usage information for the Apache Kafka® SMT
+org.apache.kafka.connect.transforms.TimestampConverter.
+
+Description
+
+Convert timestamps between different formats such as Unix epoch, strings, and Connect Date/Timestamp types.
+
+Applies to individual fields or to the entire value.
+
+Use the concrete transformation type designed for the record key
+(org.apache.kafka.connect.transforms.TimestampConverter$Key) or value
+(org.apache.kafka.connect.transforms.TimestampConverter$Value).
+
+The TimestampConverter SMT operates on one field at a time.
+
+Example
+
+This configuration snippet shows how to use TimestampConverter to transform a Unix epoch (represented as an int64 value) into a formatted date string.
+
+"transforms": "TimestampConverter",
+"transforms.TimestampConverter.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
+"transforms.TimestampConverter.format": "yyyy-MM-dd",
+"transforms.TimestampConverter.target.type": "string"
+
+Before: 1556204536000
+
+After: "2014-04-25"
+
+target.type	        The desired timestamp representation: string, unix, Date, Time, or Timestamp.	                    string	 	 	high
+field	            The field containing the timestamp, or empty if the entire value is a timestamp.	                string	“”	 	high
+format	            Format string for the timestamp that is compatible with java.text.SimpleDateFormat.
+                    Used to generate the output when type=string or used to parse the input if the input is a string.
+                    For additional details, see SimpleDateFormat.	                                                    string	“”	 	medium
+
+
+
+
+
+
+
+
+
