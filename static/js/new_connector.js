@@ -241,7 +241,7 @@ function createFileStreamSourceConnector(){
     obj.config.topic = $("#topicName").val();
 
     alert (JSON.stringify(obj));
-
+    console.log(obj);
     requestNewConnector(obj);
 }
 
@@ -254,7 +254,7 @@ function createFileStreamSinkConnector(){
     obj.config.topics = $("#topicName").val();
 
     alert (JSON.stringify(obj));
-
+    console.log(obj);
     requestNewConnector(obj);
 }
 
@@ -272,7 +272,7 @@ function createPostgresSourceConnector(){
     obj.config["table.include.list"] = $("#tableIncludeList").val();
 
     alert (JSON.stringify(obj));
-
+    console.log(obj);
     requestNewConnector(obj);
 }
 
@@ -294,9 +294,9 @@ function createOracleSourceConnector(){
     obj.config["bootstrap.servers"] = bootStrapServers;
     obj.config["database.history.kafka.topic"] = $("#serverName").val() + ".schema-changes";
 
-    //alert (JSON.stringify(obj));
+    alert (JSON.stringify(obj));
     console.log(obj);
-    //requestNewConnector(obj);
+    requestNewConnector(obj);
 }
 
 function createJdbcSinkConnector(){
@@ -313,7 +313,7 @@ function createJdbcSinkConnector(){
     obj.config["topics"] = $("#topics").val();
 
     alert (JSON.stringify(obj));
-
+    console.log(obj);
     requestNewConnector(obj);
 }
 
