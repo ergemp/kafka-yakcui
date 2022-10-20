@@ -401,7 +401,8 @@ let postgres_source_json = {
                            		"table.include.list": "",
                            		"plugin.name": "pgoutput",
                            		"time.precision.mode": "connect",
-                           		"snapshot.mode": "initial"
+                           		"snapshot.mode": "initial",
+                           		"publication.autocreate.mode": "filtered"
                            	}
                            }
 
