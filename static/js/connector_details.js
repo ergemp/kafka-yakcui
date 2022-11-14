@@ -9,7 +9,7 @@ function get(name){
 function getConnectorDescription(gConnectorName) {
     let retVal;
     $.ajax({
-        url: api + "/connectorDetail?connectorName=" + gConnectorName + "",
+        url: api + "/connectorDetail?connectorName="+gConnectorName,
         type: 'GET',
         dataType: 'json',
         async: false,
@@ -157,7 +157,7 @@ function resumeConnector(gConnectorName) {
 
 function restartConnector(gConnectorName) {
     $.ajax({
-        url: kafkaConnectHost + "/connectors/" + gConnectorName + "/restart?includeTasks=true",
+        url: kafkaConnectHost + "/connectors/" + gConnectorName + "/tasks/0/restart",
         type: 'POST',
         dataType: 'json',
         async: false,
@@ -175,9 +175,47 @@ function deleteConnector(gConnectorName) {
         dataType: 'json',
         async: false,
         success: function(result) {
+
+            $.ajax({
+                url: api + "/connectorDetail?connectorName="+gConnectorName,
+                type: 'DELETE',
+                dataType: 'json',
+                contentType: 'application/json',
+                async: false,
+                success: function(result) {
+                    alert("connector deleted");
+                    window.location.href = "connectors.html";
+                },
+                error: function (jqXHR, exception) {
+                    alert (jqXHR.responseText);
+                }
+            });
+
         }
     });
     alert("connector deleted");
     window.location.href = "/connectors.html";
 }
 
+function updateConnectorDesc() {
+
+    connector = {"name":"","description":""};
+
+    connector.name = JSON.parse(connectorStatusJson).name;
+    connector.description =  $('#connectorDescription2').val();
+
+    alert(JSON.stringify(connector));
+
+    $.ajax({
+        url: api + "/connectorDetail",
+        type: 'POST',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify(connector),
+        async: false,
+        success: function(result) {
+            alert("connector description renamed");
+        }
+    });
+    location.reload();
+}

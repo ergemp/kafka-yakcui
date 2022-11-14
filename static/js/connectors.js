@@ -66,6 +66,16 @@ function ConnectorModel(name, workerid, type, status) {
     this.workerid = workerid;
     this.type = type;
     this.status = status;
+    this.type = "";
+    this.class = "";
+}
+
+function ConnectorModel() {
+    this.name = "";
+    this.workerid = "";
+    this.type = "";
+    this.status = "";
+    this.class = "";
 }
 
 function fillClusterInfo(){
@@ -92,11 +102,23 @@ function fillConnectors(divId, gConnectorsData){
               }
             },
             columns: [
-                    "name",
-                    "workerid",
-                    "type",
+                    {
+                      dataField: 'class',
+                      width: 80,
+                      allowFiltering: false,
+                      allowSorting: false,
+                      cellTemplate(container, options) {
+                        $('<div>')
+                          .append($('<img>', { alt:"tt", width:"60" ,src: "img/" + options.value +".png" }))
+                          .appendTo(container);
+                      }
+                    },
+                    { dataField:"name", cssClass:"cellMiddleClass"},
+                    { dataField:"workerid", cssClass:"cellMiddleClass"},
+                    { dataField:"type", cssClass:"cellMiddleClass"},
                     {
                         dataField: "status",
+                        cssClass:"cellMiddleClass",
                         width: 100,
                         allowFiltering: false,
                         allowSorting: false,
@@ -122,6 +144,38 @@ function fillConnectors(divId, gConnectorsData){
         });
 }
 
+function getConnectorConfig(gConnector, connectorName){
+
+        $.ajax({
+           url: kafkaConnectHost + "/connectors/"+connectorName+"",
+           type: 'GET',
+           dataType: 'json',
+           async: false,
+           success: function(result) {
+                connector.class = result.config["connector.class"];
+           }
+       });
+
+       return gConnector;
+}
+
+function getConnectorStatus(gConnector, connectorName){
+        //connector = new ConnectorModel();
+        $.ajax({
+           url: kafkaConnectHost + "/connectors/"+connectorName+"/status",
+           type: 'GET',
+           dataType: 'json',
+           async: false,
+           success: function(result) {
+                gConnector.name = result.name;
+                gConnector.workerid = result.tasks[0].worker_id;
+                gConnector.type = result.type;
+                gConnector.status = result.tasks[0].state;
+           }
+       });
+       return gConnector;
+}
+
 function getConnectors(){
     $.ajax({
         url: kafkaConnectHost + "/connectors",
@@ -130,6 +184,11 @@ function getConnectors(){
         async: false,
         success: function(result) {
             for(var r in result) {
+                connector = new ConnectorModel();
+                connector = getConnectorStatus(connector, result[r]);
+                connector = getConnectorConfig(connector, result[r]);
+                connectorsData.push(connector);
+                /*
                 $.ajax({
                    url: kafkaConnectHost + "/connectors/"+result[r]+"/status",
                    type: 'GET',
@@ -142,6 +201,7 @@ function getConnectors(){
                                                             result.tasks[0].state));
                    }
                });
+               */
             }
         }
     });

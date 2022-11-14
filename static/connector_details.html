@@ -78,6 +78,11 @@
                         <div class="col md-6">
                             <p><h3>Connector Description</h3></p><br/>
                             <div id="connectorDescription"></div><br/>
+                            <textarea class='form-control' style="width:80%" id="connectorDescription2" name="Connector Description" rows="5" cols="50" maxlength="150"></textarea>
+                            <input class="form-control" style="width:80%" type="button" value="Update" onClick="updateConnectorDesc()">
+
+                            <br/>
+                            <br/>
 
                             <p><h3>Connector Config</h3></p><br/>
                             <div id="connectorDetails"></div><br/>
@@ -143,7 +148,7 @@
             $("#username").text(parseJwt(localStorage.Jwt).username);
         });
 
-        $("#connectorDescription").text(getConnectorDescription(get("name")));
+        $("#connectorDescription2").html(getConnectorDescription(get("name")));
 
     </script>
 </body>

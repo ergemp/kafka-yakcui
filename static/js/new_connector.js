@@ -367,8 +367,30 @@ function requestNewConnector(gObj){
         data: JSON.stringify(gObj),
         async: false,
         success: function(result) {
-            alert("connector created");
-            window.location.href = "connectors.html";
+
+            //alert("connector created");
+
+            connectorDetail = {"name": "", "description":""};
+            connectorDetail.name = $("#connectorName").val();
+            connectorDetail.description = $("#desc").val();
+
+            $.ajax({
+                url: api + "/connectorDetail",
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify(connectorDetail),
+                async: false,
+                success: function(result) {
+                    alert("connector created");
+                    window.location.href = "connectors.html";
+                },
+                error: function (jqXHR, exception) {
+                    alert (jqXHR.responseText);
+                }
+            });
+
+            //window.location.href = "connectors.html";
         },
         error: function (jqXHR, exception) {
             alert (jqXHR.responseText);

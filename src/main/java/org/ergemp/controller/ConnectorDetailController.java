@@ -41,10 +41,10 @@ public class ConnectorDetailController {
     }
 
     @DeleteMapping("/api/connectorDetail")
-    public ResponseEntity deleteControllerDetail(@RequestBody ConnectorDetailModel connector) {
+    public ResponseEntity deleteControllerDetail(@RequestParam String connectorName) {
 
-        detailComponent.deleteConnector(connector.getName());
-        ResponseEntity retVal = ResponseEntity.status(HttpStatus.OK).body(connector.toString());
+        detailComponent.deleteConnector(connectorName);
+        ResponseEntity retVal = ResponseEntity.status(HttpStatus.OK).body(connectorName.toString() + " description deleted" );
         return retVal;
     }
 

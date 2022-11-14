@@ -22,6 +22,16 @@
     <link href="css/dx.light.css" rel="stylesheet">
     <link href="css/dx.common.css" rel="stylesheet">
 
+    <style>
+        .dx-datagrid-content .dx-datagrid-table .dx-row .dx-editor-cell {
+            vertical-align: middle!important;
+        }
+
+        .cellMiddleClass {
+            vertical-align: middle!important;
+        }
+    </style>
+
 </head>
 
 <body id="page-top" class="dx-viewport">
@@ -103,6 +113,9 @@
         $("#topbar").load("include/topbar.html");
 
         let connectors = getConnectors();
+
+        //console.log(connectors);
+
         fillConnectors("connectorList", connectors);
         fillClusterInfo();
 
