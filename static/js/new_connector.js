@@ -42,6 +42,8 @@ let fileSourceTemplateHtml = "<div style='float:left;margin-right:20px;'>" +
                              "<label style='display:block' for='topicName'>Topic Name</label>" +
                              "<input class='form-control' type='text' id='topicName' />" +
                              "<small id='connectorNameHelp' class='form-text text-muted'>Topic to write to</small> <br/><br/> " +
+                             "<label style='display:block' for='desc'>Description</label>" +
+                             "<textarea class='form-control' id='desc' name='desc' rows='4' cols='50' maxlength='150'></textarea><br/><br/>" +
                              "<input class='form-control' type='button' value='Create' onClick='createFileStreamSourceConnector()'>" +
                              "<br/><br/>" +
                              "</div>"
@@ -57,6 +59,8 @@ let fileSinkTemplateHtml = "<div style='float:left;margin-right:20px;'>" +
                              "<label style='display:block' for='topicName'>Topic Name</label>" +
                              "<input class='form-control' type='text' id='topicName' />" +
                              "<small id='connectorNameHelp' class='form-text text-muted'>Topic to read from</small> <br/><br/> " +
+                             "<label style='display:block' for='desc'>Description</label>" +
+                             "<textarea class='form-control' id='desc' name='desc' rows='4' cols='50' maxlength='150'></textarea><br/><br/>" +
                              "<input class='form-control' type='button' value='Create' onClick='createFileStreamSinkConnector()'>" +
                              "<br/><br/>" +
                              "</div>"
@@ -85,6 +89,8 @@ let postgresSourceTemplateHtml = "<div style='float:left;margin-right:20px;'>" +
                              "<input class='form-control' type='text' id='tableIncludeList' />" +
                              "<small id='connectorNameHelp' class='form-text text-muted'>Table to be captures should be in schema_name.table_name format. </small> " +
                              "<small id='connectorNameHelp' class='form-text text-muted'>Multiple tables may be entered with comma separated</small> <br/><br/> " +
+                             "<label style='display:block' for='desc'>Description</label>" +
+                             "<textarea class='form-control' id='desc' name='desc' rows='4' cols='50' maxlength='150'></textarea><br/><br/>" +
                              "<input class='form-control' type='button' value='Create' onClick='createPostgresSourceConnector()'>" +
                              "<br/><br/>" +
                              "</div>"
@@ -120,6 +126,8 @@ let jdbcSinkTemplateHtml = "<div style='float:left;margin-right:20px;'>" +
                              "<input class='form-control' type='text' id='topics' />" +
                              "<small id='connectorNameHelp' class='form-text text-muted'>Kafka Topic to read from </small>" +
                              "<small id='connectorNameHelp' class='form-text text-muted'>The topic debezium writes the cdc records </small> <br/><br/> " +
+                             "<label style='display:block' for='desc'>Description</label>" +
+                             "<textarea class='form-control' id='desc' name='desc' rows='4' cols='50' maxlength='150'></textarea><br/><br/>" +
                              "<input class='form-control' type='button' value='Create' onClick='createJdbcSinkConnector()'>" +
                              "<br/><br/>" +
                              "</div>"
@@ -227,6 +235,8 @@ let oracleSourceTemplateHtml =  "<div style='float:left;margin-right:20px;'>" +
                                 "<input class='form-control' type='text' id='tableIncludeList' />" +
                                 "<small id='connectorNameHelp' class='form-text text-muted'>Table to be captures should be in schema_name.table_name format. </small> " +
                                 "<small id='connectorNameHelp' class='form-text text-muted'>Multiple tables may be entered with comma separated</small> <br/><br/> " +
+                                "<label style='display:block' for='desc'>Description</label>" +
+                                "<textarea class='form-control' id='desc' name='desc' rows='4' cols='50' maxlength='150'></textarea><br/><br/>" +
                                 "<input class='form-control' type='button' value='Create' onClick='createOracleSourceConnector()'>" +
                                 "<br/><br/>" +
                                 "</div>"

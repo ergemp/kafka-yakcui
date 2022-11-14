@@ -6,6 +6,21 @@ function get(name){
       return decodeURIComponent(name[1]);
 }
 
+function getConnectorDescription(gConnectorName) {
+    let retVal;
+    $.ajax({
+        url: api + "/connectorDetail?connectorName=" + gConnectorName + "",
+        type: 'GET',
+        dataType: 'json',
+        async: false,
+        success: function(result) {
+            retVal = result;
+        }
+    });
+    //return JSON.stringify(retVal, null, 2);
+    return retVal.description;
+}
+
 function getConnectorConfig(gConnectorName) {
     let retVal;
     $.ajax({

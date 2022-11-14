@@ -76,6 +76,9 @@
                             </div>
                         </div>
                         <div class="col md-6">
+                            <p><h3>Connector Description</h3></p><br/>
+                            <div id="connectorDescription"></div><br/>
+
                             <p><h3>Connector Config</h3></p><br/>
                             <div id="connectorDetails"></div><br/>
                             <textarea class='form-control' style="width:80%" id="connectorConfig" name="Connector Config" rows="25" cols="50" readonly></textarea>
@@ -139,6 +142,8 @@
         $(document).ready(function() {
             $("#username").text(parseJwt(localStorage.Jwt).username);
         });
+
+        $("#connectorDescription").text(getConnectorDescription(get("name")));
 
     </script>
 </body>
