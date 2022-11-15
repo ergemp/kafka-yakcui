@@ -9,7 +9,7 @@ public class JwtModel {
     private Long ttl;
 
     public JwtModel(){
-        this.ttl = System.currentTimeMillis() + (20 * 60 * 1000); // 20 mins of validity
+        this.ttl = System.currentTimeMillis() + (60 * 60 * 1000); // 60 mins of validity
     }
 
     public String getUsername() {
