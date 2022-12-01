@@ -32,6 +32,7 @@ function fillPluginList(gDivId){
     $("#"+gDivId).html(retVal);
 }
 
+
 let fileSourceTemplateHtml = "<div style='float:left;margin-right:20px;'>" +
                              "<label style='display:block' for='connectorName'>Connector Name</label>" +
                              "<input class='form-control' type='text' id='connectorName' />" +
@@ -89,6 +90,12 @@ let postgresSourceTemplateHtml = "<div style='float:left;margin-right:20px;'>" +
                              "<input class='form-control' type='text' id='tableIncludeList' />" +
                              "<small id='connectorNameHelp' class='form-text text-muted'>Table to be captures should be in schema_name.table_name format. </small> " +
                              "<small id='connectorNameHelp' class='form-text text-muted'>Multiple tables may be entered with comma separated</small> <br/><br/> " +
+                             "<label style='display:block' for='initialMode'>Select Initial Mode: </label>" +
+                             "<select class='form-control' name='initialMode' id='initialMode' >" +
+                             "<option selected='selected' value='initial'> initial </option>" +
+                             "<option value='initial_only'> initial_only </option>" +
+                             "<option value='never'> never </option>" +
+                             "</select><br/><br/>" +
                              "<label style='display:block' for='desc'>Description</label>" +
                              "<textarea class='form-control' id='desc' name='desc' rows='4' cols='50' maxlength='150'></textarea><br/><br/>" +
                              "<input class='form-control' type='button' value='Create' onClick='createPostgresSourceConnector()'>" +
@@ -235,6 +242,12 @@ let oracleSourceTemplateHtml =  "<div style='float:left;margin-right:20px;'>" +
                                 "<input class='form-control' type='text' id='tableIncludeList' />" +
                                 "<small id='connectorNameHelp' class='form-text text-muted'>Table to be captures should be in schema_name.table_name format. </small> " +
                                 "<small id='connectorNameHelp' class='form-text text-muted'>Multiple tables may be entered with comma separated</small> <br/><br/> " +
+                                "<label style='display:block' for='initialMode'>Select Initial Mode: </label>" +
+                                "<select class='form-control' name='initialMode' id='initialMode' >" +
+                                "<option selected='selected' value='initial'> initial </option>" +
+                                "<option value='initial_only'> initial_only </option>" +
+                                "<option value='never'> never </option>" +
+                                "</select><br/><br/>" +
                                 "<label style='display:block' for='desc'>Description</label>" +
                                 "<textarea class='form-control' id='desc' name='desc' rows='4' cols='50' maxlength='150'></textarea><br/><br/>" +
                                 "<input class='form-control' type='button' value='Create' onClick='createOracleSourceConnector()'>" +
@@ -281,6 +294,8 @@ function createPostgresSourceConnector(){
     obj.config["database.server.name"] = $("#serverName").val();
     obj.config["table.include.list"] = $("#tableIncludeList").val();
 
+    obj.config["snapshot.mode"] = $('#initialMode').find(":selected").val();
+
     alert (JSON.stringify(obj));
     console.log(obj);
     requestNewConnector(obj);
@@ -303,6 +318,8 @@ function createOracleSourceConnector(){
     obj.config["database.history.kafka.bootstrap.servers"] = bootStrapServers;
     obj.config["bootstrap.servers"] = bootStrapServers;
     obj.config["database.history.kafka.topic"] = $("#serverName").val() + ".schema-changes";
+
+    obj.config["snapshot.mode"] = $('#initialMode').find(":selected").val();
 
     alert (JSON.stringify(obj));
     console.log(obj);

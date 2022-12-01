@@ -70,14 +70,14 @@
                     <div class="row">
                         <div class="col md-6">
                             <p><h3>Connector Status</h3></p><br/>
-                            <div id="statusDetails"></div><br/>
+                            <div id="statusDetails"></div>
                             <div style="display: block;">
                                 <textarea class='form-control' style="width:80%" id="connectorStatus" name="Connector Status" rows="25" cols="50" readonly></textarea>
                             </div>
                         </div>
                         <div class="col md-6">
                             <p><h3>Connector Description</h3></p><br/>
-                            <div id="connectorDescription"></div><br/>
+                            <div id="connectorDescription"></div>
                             <textarea class='form-control' style="width:80%" id="connectorDescription2" name="Connector Description" rows="5" cols="50" maxlength="150"></textarea>
                             <input class="form-control" style="width:80%" type="button" value="Update" onClick="updateConnectorDesc()">
 
@@ -85,12 +85,18 @@
                             <br/>
 
                             <p><h3>Connector Config</h3></p><br/>
-                            <div id="connectorDetails"></div><br/>
-                            <textarea class='form-control' style="width:80%" id="connectorConfig" name="Connector Config" rows="25" cols="50" readonly></textarea>
+                            <div id="connectorDetails"></div>
+                            <textarea class='form-control' style="width:80%" id="connectorConfig" name="Connector Config" rows="25" cols="50" ></textarea>
+                            <input class="form-control" style="width:80%" type="button" value="Update" onClick="updateConnectorConfig()">
                         </div>
                     </div>
 
                 </div>
+                <br/>
+                <br/>
+                <hr />
+                <br/>
+                <br/>
                 <!-- /.container-fluid -->
 
             </div>

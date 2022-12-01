@@ -204,7 +204,7 @@ function updateConnectorDesc() {
     connector.name = JSON.parse(connectorStatusJson).name;
     connector.description =  $('#connectorDescription2').val();
 
-    alert(JSON.stringify(connector));
+    //alert(JSON.stringify(connector));
 
     $.ajax({
         url: api + "/connectorDetail",
@@ -214,8 +214,33 @@ function updateConnectorDesc() {
         data: JSON.stringify(connector),
         async: false,
         success: function(result) {
-            alert("connector description renamed");
+            alert("connector description altered");
         }
     });
     location.reload();
+}
+
+
+function updateConnectorConfig() {
+
+    connectorConfig = JSON.parse($('#connectorConfig').val());
+
+    //alert(connectorConfig.name);
+
+    $.ajax({
+        url: kafkaConnectHost + "/connectors/"+connectorConfig.name+"/config",
+        type: 'PUT',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify(connectorConfig.config),
+        async: false,
+        success: function(result) {
+            alert("connector config altered");
+        },
+        error: function (jqXHR, exception) {
+            alert (jqXHR.responseText);
+        }
+    });
+    location.reload();
+
 }
