@@ -2,6 +2,7 @@ let supportedPlugins = ["io.debezium.connector.postgresql.PostgresConnector",
                         "org.apache.kafka.connect.file.FileStreamSinkConnector",
                         "org.apache.kafka.connect.file.FileStreamSourceConnector",
                         "io.confluent.connect.jdbc.JdbcSinkConnector",
+                        "io.confluent.connect.jdbc.JdbcSourceConnector",
                         "io.debezium.connector.oracle.OracleConnector"]
 
 function fillPluginList(gDivId){
@@ -102,6 +103,60 @@ let postgresSourceTemplateHtml = "<div style='float:left;margin-right:20px;'>" +
                              "<br/><br/>" +
                              "</div>"
                              ;
+
+let jdbcSourceTemplateHtml = "<div style='float:left;margin-right:20px;'>" +
+                              "<label style='display:block' for='connectorName'>Connector Name</label>" +
+                              "<input class='form-control' type='text' id='connectorName' />" +
+                              "<small id='connectorNameHelp' class='form-text text-muted'>The name of the connector</small> <br/><br/> " +
+                              "<label style='display:block' for='dialectName'>Dialect Name</label>" +
+                              "<select class='form-control' name='pluginList' id='dialectName'>" +
+                              "<option value='OracleDatabaseDialect'>OracleDatabaseDialect</option>" +
+                              "<option value='PostgreSqlDatabaseDialect'>PostgreSqlDatabaseDialect</option>" +
+                              "</select>" +
+                              "<small id='dialectNameHelp' class='form-text text-muted'>Select the target database dialect.</small> <br/><br/> " +
+                              "<label style='display:block' for='jdbcUrl'>JDBC Url</label>" +
+                              "<input class='form-control' type='text' id='jdbcUrl' />" +
+                              "<small id='connectorNameHelp' class='form-text text-muted'>Jdbc connection url for the target database</small> " +
+                              "<small id='connectorNameHelp' class='form-text text-muted'>Templates can be found in the Info section</small> <br/><br/> " +
+                              "<label style='display:block' for='userName'>User Name</label>" +
+                              "<input class='form-control' type='text' id='userName' />" +
+                              "<small id='userNameHelp' class='form-text text-muted'>Target Database Username</small> <br/><br/> " +
+                              "<label style='display:block' for='password'>Password</label>" +
+                              "<input class='form-control' type='password' id='password' />" +
+                              "<small id='passwordHelp' class='form-text text-muted'>Target Database Password</small> <br/><br/> " +
+
+                              "<label style='display:block' for='pollInterval'>poll.interval.ms</label>" +
+                              "<input class='form-control' type='text' id='pollInterval' />" +
+                              "<small id='pollIntervalHelp' class='form-text text-muted'>Poll Interval for fetching the changes in miliseconds (Default 5000)</small> <br/><br/> " +
+
+                             "<label style='display:block' for='topicPrefix'>topic.prefix</label>" +
+                              "<input class='form-control' type='text' id='topicPrefix' />" +
+                              "<small id='topicPrefixHelp' class='form-text text-muted'>text to be prefixed for the topics captured by the connector</small> <br/><br/> " +
+
+                              "<label style='display:block' for='modeName'>Mode</label>" +
+                              "<select class='form-control' name='pluginList' id='modeName'>" +
+                              "<option value='bulk'>bulk</option>" +
+                              "<option value='timestamp+incrementing'>timestamp+incrementing</option>" +
+                              "</select><br/><br/>" +
+
+                              "<label style='display:block' for='incrementingColumnName'>Incrementing Column Name</label>" +
+                              "<input class='form-control' type='text' id='incrementingColumnName' />" +
+                              "<small id='incrementingColumnNameHelp' class='form-text text-muted'>Column of the table with incremental id</small> <br/><br/> " +
+
+                              "<label style='display:block' for='timestampColumnName'>Timestamp Column Name</label>" +
+                              "<input class='form-control' type='text' id='timestampColumnName' />" +
+                              "<small id='timestampColumnNameHelp' class='form-text text-muted'>Column of the table with last updated date</small> <br/><br/> " +
+
+                              "<label style='display:block' for='tableList'>Table List</label>" +
+                              "<input class='form-control' type='text' id='tableList' />" +
+                              "<small id='tableListHelp' class='form-text text-muted'>For multiple tables, enter comma separated list (SCHEMA_NAME.TABLE_NAME all upper case for oracle)</small> <br/><br/>" +
+
+                              "<label style='display:block' for='desc'>Description</label>" +
+                              "<textarea class='form-control' id='desc' name='desc' rows='4' cols='50' maxlength='150'></textarea><br/><br/>" +
+                              "<input class='form-control' type='button' value='Create' onClick='createJdbcSourceConnector()'>" +
+                              "<br/><br/>" +
+                              "</div>"
+                            ;
 
 let jdbcSinkTemplateHtml = "<div style='float:left;margin-right:20px;'>" +
                              "<label style='display:block' for='connectorName'>Connector Name</label>" +
@@ -344,6 +399,41 @@ function createJdbcSinkConnector(){
     requestNewConnector(obj);
 }
 
+function createJdbcSourceConnector(){
+    obj = jdbc_source_json ;
+
+    obj.name = $("#connectorName").val();
+    obj.config["connector.class"] = "io.confluent.connect.jdbc.JdbcSourceConnector";
+    obj.config["dialect.name"] = $('#dialectName').find(":selected").val();
+    obj.config["connection.url"] = $("#jdbcUrl").val();
+    obj.config["connection.user"] = $("#userName").val();
+    obj.config["connection.password"] = $("#password").val();
+    obj.config["mode"] = $("#modeName").val();
+    //obj.config["schema.pattern"] = $("#userName").val();
+    obj.config["table.whitelist"] = $('#tableList').val();
+
+    if ($('#topicPrefix').val() !== "") {
+        obj.config["topic.prefix"] = $('#topicPrefix').val();
+    }
+
+    if ($('#pollInterval').val() !== "") {
+        obj.config["poll.interval.ms"] = $('#pollInterval').val();
+    }
+
+    if ($('#modeName').find(":selected").val() === "bulk" ) {
+
+    }
+    else if ($('#modeName').find(":selected").val() === "timestamp+incrementing") {
+        obj.config["incrementing.column.name"] = $("#incrementingColumnName").val();
+        obj.config["timestamp.column.name"] = $("#timestampColumnName").val();
+    }
+
+
+    alert (JSON.stringify(obj));
+    console.log(obj);
+    requestNewConnector(obj);
+}
+
 function buildBuilder(){
     let selectedItem = $('#pluginList').find(":selected").val();
 
@@ -366,6 +456,10 @@ function buildBuilder(){
         }
         else if(selectedItem === "io.confluent.connect.jdbc.JdbcSinkConnector") {
             $("#newConnectorForm").html(jdbcSinkTemplateHtml);
+            $("#newConnectorInfo").html(jdbcSinkInfoTemplateHtml);
+        }
+        else if(selectedItem === "io.confluent.connect.jdbc.JdbcSourceConnector") {
+            $("#newConnectorForm").html(jdbcSourceTemplateHtml);
             $("#newConnectorInfo").html(jdbcSinkInfoTemplateHtml);
         }
     }
@@ -505,6 +599,21 @@ let jdbc_sink_json = {
                             "auto.evolve": "true",
                             "auto.create": "true",
                             "insert.mode": "upsert"
+                       }
+                     }
+
+let jdbc_source_json = {
+                       "name": "",
+                       "config": {
+                            "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
+                            "tasks.max": "1",
+                            "dialect.name": "",
+                            "connection.url": "",
+                            "connection.user": "debezium",
+                            "connection.password": "debezium",
+                            "table.whitelist" : "",
+                            "mode" : "",
+                            "poll.interval.ms" : 5000
                        }
                      }
 
